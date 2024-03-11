@@ -3,22 +3,27 @@
 
 \section{Motivation}
 \par
-In collaboration with NHS Manchester Royal Infirmary I have received smart wearable devices - Withings Watch,
+In collaboration with NHS Manchester Royal Infirmary, I have received smart wearable devices - Withings Watch,
 and later Oura ring. It was during a time when I wanted to improve my fitness, and so I had an initial idea of an
-application that would act as companion in a fitness journey. Such as reminding about activity, highlighting progress made and
-possibly make suggestions in an autonomous way via wearable devices. Researching existing product offerings, none of them 
-did everything I envisioned, or they had major drawbacks such as cost. I will elaborate in-depth on this further in \ref{section:similarSystems}
+application that would act as a companion in a fitness journey. Such as reminding about daily activity, highlighting progress made and
+possibly autonomously making suggestions from gathered wearable data. Researching existing product offerings, none of them 
+did everything I envisioned, or they had major drawbacks such as cost.
+\par One major point of contention with current wearables data tracking apps is that they are all closed-source offerings from for-profit corporations such as Google, Apple etc. Tracking/companion apps are often predatory, offering minimal services for free to hook the user, and then pay-walling existing features. This has happened with the popular app - MyFittnessPal, locking the previously free beloved feature of calorie counting behind a premium [cite]. I think that a community-driven open-source solution is a better approach. There is more transparency in what is being stored, and how it is used, which should constitute better security and user trust. By self-deploying the application, users would only pay for what they use on a pay-as-you-go basis. 
 \par
 In the wider context, this topic is important because fitness is closely linked with a person's overall health, being a risk factor in developing depression, heart diseases and more \cite{nhsObesity}. 
-Fitness levels have been on decline for both the UK and in the rest of the world.
+Fitness levels have been on the decline in both the UK and the rest of the world.
 For example, as of Nov. 2021, 63.5\% of adults in England are either obese or overweight \cite{ukObesity2023Survey}. 
 In Nov. 2022, It was estimated that obesity costs NHS £6 billion annually \cite{nhsObesityCost}.
 Therefore, there is a large interest from institutions such as NHS to use technology to help combat this problem.
-\par How wearables help
-\par Open source
+
+\par Smart Wearable devices can continuously and autonomously collect metrics about heart, activity, sleep and more. That data can then be used to autonomously derive insights, such as providing weekly exercise consistency. This eliminates the monotony of manual information tracking, as users don't have to do anything other than wear the devices, allowing them to focus on what matters. 
+
+\par AI can be used to extract much more complex insights than any hand-crafted methods. With the recent advancements, namely LLMs such as GPT4, the quality of inferences and ease of use have never been better than before. In particular, those models are good at using context - prior information that influences the output. This can be wearables data in this case. As such there is a large opportunity to explore how those models can help with the problem at hand. This is something that a few product offerings have implemented recently, however, their pricing is astronomical and is not easily accessible to lower-income individuals. More on this in [].
+
+
 On a personal note, what I found to be the hardest with fitness is staying consistent. It is especially tough because you don't 
-see results immediately and it feels that you are not progressing. It is also very tedious to manually track fitness related metrics.
-Lastly, there might not be somebody that gives you encouragement or holding you accountable. I wanted to address all of those factors in my application, hoping it would help somebody out there as it helped myself.
+see results immediately and it feels that you are not progressing. It is also very tedious to manually track fitness-related metrics.
+Lastly, there might not be somebody who gives you encouragement or holds you accountable. I wanted to address all of those factors in my application, hoping it would help somebody out there as it helped me.
 \section{Aims}
 On a high-level, those are the aims I wanted my application to fullfil.
 \begin{itemize}
