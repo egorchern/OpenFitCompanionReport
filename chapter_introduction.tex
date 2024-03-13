@@ -10,11 +10,11 @@ possibly autonomously making suggestions from gathered wearable data. Researchin
 did everything I envisioned, or they had major drawbacks such as cost.
 \par One major point of contention with current wearables data tracking apps is that they are all closed-source offerings
  from for-profit corporations such as Google, Apple etc.
- Those apps are often predatory, following the well known pattern in tech products, offering
- services for free to hook the user, and then pay-walling existing features to start getting profit margins once the user-base has sufficiently grown. 
+ Those apps are often predatory, following the well-known pattern in tech products, offering
+ services for free to hook the user, and then pay-walling existing features to start getting profit margins once the user base has sufficiently grown. 
  One stark example is - MyFittnessPal, locking the previously free beloved feature of 
  calorie counting behind a premium \cite{myfitnesspalPaywall} as well as having a data breach that leaked sensitive health data of 150 million users \cite{myFitnessPalDataBreach}.
- My colleague that also worked with a Withings watch and had their data deleted from their Withings app, probably caused by inactivity, as they stopped using the device after collecting enough data for their project. 
+ My colleague who also worked with a Withings watch had their data deleted from their Withings app, probably caused by inactivity, as they stopped using the device after collecting enough data for their project. 
  This highlights the need to minimise reliance on such systems. I think that a community-driven open-source solution is a better approach. 
  There is more transparency in what is being stored, and how it is used, which should constitute better security and 
  user trust. By self-deploying the application, users would only pay for what they use on a pay-as-you-go basis. 
@@ -28,13 +28,12 @@ Therefore, there is a large interest from institutions such as NHS to use techno
 \par Smart Wearable devices can continuously and autonomously collect metrics about heart, activity, 
 sleep and more. That data can then be used to autonomously derive insights, such as providing weekly exercise consistency. 
 This eliminates the monotony of manual information tracking, as users don't have to do anything other than wear the devices,
- allowing them to focus on what matters. By using multiple devices, we could correct for inaccuracies of a single device. 
+ allowing them to focus on what matters. By using multiple devices, we can correct for inaccuracies of a single device. 
+ The focus of this project is on wearable devices, however there is also potential to get further fitness data, and thus better quality insights, from stationary smart devices such as smart scales.
 
 \par AI can be used to extract much more complex insights than any hand-crafted methods. With the recent advancements,
  namely LLMs such as GPT4, the quality of inferences and ease of use have never been better than before. In particular,
- those models are good at utilizing context to influence the result. 
- This can be wearables data in this case. As such, there is a large opportunity to explore 
- how those models can help with the problem at hand. This is something that a few product offerings 
+ those models are good at utilizing large amounts of context information to influence the result, this can be wearables data in this case. Also, those models are pre-trained, so we avoid issues of machine learning projects: creating a dataset, ensuring no bias, tweaking hyperparameters, training for large epoch counts to get adequate accuracy, etc.  As such, there is a large opportunity to explore how those models can help with the problem at hand. This is something that a few product offerings 
  have implemented recently, however, their pricing is astronomical and is not easily accessible to lower-income individuals. More on this in [].
 
 
@@ -43,9 +42,25 @@ see results immediately and it feels that you are not progressing. It is also ve
 Lastly, there might not be somebody who gives you encouragement or holds you accountable. I wanted to address all of those factors in my application, hoping it would help somebody out there as it helped me.
 \section{Aims}
 On a high-level, those are the aims I wanted my application to fullfil.
-\begin{itemize}
-    \item {Sync with any number and kind of wearable devices (as long as they provide API), storing data in our own database}
-    \item {Feedback }
-    \item {Minimise the cost of running the service}
-\end{itemize}
+\begin{center}
+    \begin{tabularx}{1\textwidth} {| >{\centering\arraybackslash}X 
+        | >{\centering\arraybackslash}X 
+        |}
+    \hline
+    Aim & Criteria for success  \\ 
+    \hline
+     Autonomously sync in real-time with several fitness devices, storing data in our database and producing single unified measurement as well & Concrete implementation to sync with Withings And Oura products, creating unified measurement by averaging.  Infrastructure to allow easy implementation of sync with other providers\\ 
+    \hline
+     Report to the user about their progress via notification, providing useful metrics and insights & Implementation to send push notification to the user's phone, then providing metrics on a separate page. Such as if the user fulfilled expected daily activity levels. \\ 
+    \hline
+     Integrate AI to analyse the data and provide accurate and effective feedback about the user's health and well-being & Concrete implementation using GPT4, provides feedback for each day, week and month. Feedback should be factual, mention specific metrics/measurements, and include positive areas and areas that the user can improve on.\\
+    \hline
+     Nudge the user to participate in physical activities by recommending the best activities/exercises depending on a variety of customizable parameters and data available &  Implementation to send push-notifications throughout times of day, linking to AI planned activity plan for that time. Activities should have descriptions and videos on how to perform them. Activities should be well-suited for the user's preferences and the data collected.\\
+    \hline
+     Minimise the cost of running the service & Compare the cost of operating our service with the costs of competing similar systems. They should provide similar functionality in order for the comparison to be fair. \\
+    \hline
+    \end{tabularx}
+\end{center}
+
+
 
