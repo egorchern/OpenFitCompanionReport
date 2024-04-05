@@ -2,13 +2,55 @@
 \label{cha:core_system_design}
 \section{Requirements Analysis}
 \subsection{User Requirements}
-The following user requirements for the system were gathered by inspecting similar systems, personal creativity and feedback from supervisor or wearables lab team. User stories were chosen for representation.
+The following user requirements for the system were gathered by inspecting similar systems, personal creativity and feedback from supervisor or wearables lab team. User stories were chosen for representation: \ref{table:userStories}.
+
+        \begin{longtblr}[
+            caption={User Stories},
+            label={table:userStories}
+        ] {
+            colspec = {|X|X|},
+            rowhead = 1,
+            hlines,
+        }
+
+        User Story & Acceptance Criteria  \\ 
+
+        As a user I can view health data originating from Oura and Withings devices on a single central dashboard UI, so that I can quickly compare measurements between the devices and also manually examine my physical activity and sleep trends.
+        & 
+        Given that user is authenticated, when the user is on the dashboard page, the dashboard is displayed, containing a graph visualising last 7 days of data from both devices, with each line colored differently for each device; also buttons to switch which property, such as steps per day, should be displayed on the graph.
+        \\ 
+
+        As a user I can download all of my data as a csv file by pressing a button in the UI, so that I have my personal data conveniently in one file, in a widely supported format, which could be used for backing-up my data tp other storage solution, running data analysis etc.
+        & 
+        Given that user is authenticated, when the user presses 'Export CSV' button on the main page's UI, the csv file download starts, with that file containing all of the health measurements data persisted in the system's database at that time 
+        \\ 
+
+        As a user I can critically reflect on the passed day, with helpful insights and data presented on the UI; I also want to be reminded about this everyday at a certain configurable time; So that I can assess my progress towards my health goals, take pride in my accomplishments today and identify areas to improve on tomorrow.
+        & 
+        Given that user is authenticated, at a user configured time, the user is notified about daily report being available. On the daily report UI page, there is feedback highlighting areas of achievement and areas to improve on; as well as a graph visualising user's progress towards their weekly activity goals, as well as how well/poor the predicted daily activity norm was achieved
+        \\
+
+        As a user I can critically reflect on the passed week, with helpful insights and data presented on the UI; I also want to be reminded about this everyday at a certain configurable time; So that I can assess my consistency in physical activity or sleep, as well as compare this with the previous week.
+        &
+        Given that user is authenticated, at a user configured time, the user is notified about weekly report being available. On the weekly report UI page, there are graphs visualising consistency in key metrics of MET minutes and sleep score; as well as numerical value quantifying the consistency, with a comparison to the 3 previous weeks. 
+       \\
+
+       As a user I want to receive activity reminders throughout the day at configurable times containing a list of curated exercises, with description and video example on how to perform them, that are well suited to my preferences and health data so far in the week; So that I am encouraged to fullfil my weekly activity goals; as well as saving time not having to create a good exercise regiment myself or saving money by not paying somebody else to do it.  
+       &
+       fsfs 
+       \\
+       As a user I can submit free-form natural language questions and then receive natural language answers, which should influenced as required by my health data and set preferences. So that I can have natural conversation about my health like I would with a real-life personal trainer, providing guidance and sense of not being alone.
+    
+
+        \end{longtblr}
+
+
 \subsection{Functional Requirements}
 \subsection{Non-Functional Requirements}
 \section{High-level overview}
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{images/highLevel.png}
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{images/highLevel.pdf}
     \caption{High-Level architecture diagram}
     \label{fig:1}
 \end{figure}
