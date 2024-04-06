@@ -133,6 +133,10 @@ Ultimately, the data is transformed into useful information (insight) using usin
 \end{itemize}
 
 \section{Back-end}
+Because the system is event-driven, we can utilise serverless function as the main computing units in the backend; For AWS that is Lambda. Using Lambda is the most cost-effective option; it allows paying only for execution time down to milliseconds, free data out transfer to other AWS services. One disadvantage are cold starts, when a function is called for the first time in a while, it has increased latency due to some set-up, from my experiments it's around 400ms on average; and that happens for all Lambda functions, so if there is a chain of such functions called one after another, the latency will stack up and be quite noticeable. AWS provides the "Provisioned Concurrency", making sure that n functions are kept initialised and ready to respond at any time; however, it has a separate costing scheme similar to servers, whereby you pay by the second even if the function never called. As per project aims, minimising cost is more important so the latency is something that is just tolerated.
+
+For persistance, DynamoDB is used. It is schemaless in the attributes, however the keys need to be set beforehand. Because the service is meant to be used by a single user who is the owner of the self-deployed infrastructure, there is no need to identify to which user the row of data belongs to. 
+Some of the backend components are in \ref {}, as to not clutter the diagram and semantically they are more about interaction with the frontend.
 \subsection{AWS services}
 \subsection{Adapters}
 \subsection{Unifying}
