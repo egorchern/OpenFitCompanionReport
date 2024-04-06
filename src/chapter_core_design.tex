@@ -3,7 +3,7 @@
 \section{Requirements Analysis}
 \subsection{User Requirements}
 The following user requirements for the system were gathered by inspecting similar systems, personal creativity and feedback from supervisor or wearables lab team. User stories were chosen for representation: \ref{table:userStories}.
-
+\begin{center}
         \begin{longtblr}[
             caption={User Stories},
             label={table:userStories}
@@ -32,21 +32,83 @@ The following user requirements for the system were gathered by inspecting simil
 
         As a user I can critically reflect on the passed week, with helpful insights and data presented on the UI; I also want to be reminded about this everyday at a certain configurable time; So that I can assess my consistency in physical activity or sleep, as well as compare this with the previous week.
         &
-        Given that user is authenticated, at a user configured time, the user is notified about weekly report being available. On the weekly report UI page, there are graphs visualising consistency in key metrics of MET minutes and sleep score; as well as numerical value quantifying the consistency, with a comparison to the 3 previous weeks. 
+        Given that user is authenticated, when the user configured time is reached, the user is notified about weekly report being available. On the weekly report UI page, there are graphs visualising consistency in key metrics of MET minutes and sleep score; as well as numerical value quantifying the consistency, with a comparison to the 3 previous weeks. 
        \\
 
-       As a user I want to receive activity reminders throughout the day at configurable times containing a list of curated exercises, with description and video example on how to perform them, that are well suited to my preferences and health data so far in the week; So that I am encouraged to fullfil my weekly activity goals; as well as saving time not having to create a good exercise regiment myself or saving money by not paying somebody else to do it.  
+       As a user I want to receive activity reminders throughout the day at configurable times containing a list of curated exercises, with description and video example on how to perform them, that are well suited to my preferences and health data so far in the week; So that I am encouraged to fullfil my weekly activity goals; saving time by not having to create a good exercise regiment myself or saving money by not paying somebody else to do it.  
        &
-       fsfs 
+       Given that the user is authenticated, when the user configured time is reached, the user is notified about daily exercise. On the exercises UI page, there is achieved to expected activity counter and curated list of exercises, which respect the following user configured preferences: athleticism level, MET weekly target, excluded activities, gym days and home equipment; as well as taking gathered health data into consideration.
        \\
-       As a user I can submit free-form natural language questions and then receive natural language answers, which should influenced as required by my health data and set preferences. So that I can have natural conversation about my health like I would with a real-life personal trainer, providing guidance and sense of not being alone.
-    
+       As a user I can submit free-form natural language questions and then receive natural language answers, which should be influenced as required by my health data and my profile; accessible though UI. So that I can have natural conversation about my health like I would with a real-life personal trainer, providing guidance and sense of not being alone.
+       &
+       Given that the user is authenticated, when the user visits the the AI Chat UI page there is a chat containing past user's requests and system's responses; there is an input box where the user can type a question using natural language. After submitting the question a reply is sent, which takes into account user's health data and their profile.
 
         \end{longtblr}
-
+    \end{center}
 
 \subsection{Functional Requirements}
+The following functional requirements were derived so that user requirements could be fulfilled. System use case UML diagram, Flowchart and textual descriptions were used as representations.
+\begin{itemize}
+    \item Sync and view data diagram: \ref{fig:2}
+    \item Export data diagram: \ref{fig:3}
+    \item Daily \& Weekly Reports diagram: \ref{fig:4}
+    \item AI Inference flowchart: \ref{fig:5}
+    \item Activity Plan diagram: \ref{fig:6}
+    \item Personalisation: User is able to configure their profile, which is saved in the database and used to customise modifiable parameters of the system. The profile has the following fields: 
+    \begin{itemize}
+        \item Height in Cm: Integer
+        \item Weight in Kg: Integer
+        \item MET Minutes weekly target: Integer
+        \item Excluded Activity Keywords List of strings
+        \item Athleticism: Enum [Beginner, Intermediate, Expert]
+        \item Gym Days: List of Days of the week
+        \item Home equipment: List of strings
+        \item Report notification time: Time
+        \item Daily Activity Reminder times: List of Times
+    \end{itemize}
+\end{itemize}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{../images/viewFunc.pdf}
+    \caption{View data use case UML diagram}
+    \label{fig:2}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{../images/exportDataFunc.pdf}
+    \caption{Export data use case UML diagram}
+    \label{fig:3}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{../images/reports.pdf}
+    \caption{Daily \& Weekly Reports use case UML diagram}
+    \label{fig:4}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{../images/ai.pdf}
+    \caption{AI Inference functionality Flow Chart}
+    \label{fig:5}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{../images/workouts.pdf}
+    \caption{Activity plan use case UML diagram}
+    \label{fig:6}
+\end{figure}
 \subsection{Non-Functional Requirements}
+The following non-functional requirements for the system were gathered by inspecting general best practices and common sense. Represented as textual descriptions. 
+\begin{itemize}
+    \item Security: System must be secure and only allow access to the authenticated user. 
+    \item Performance: UI must have low latency and feel snappy when used on a mobile network. 
+    \item Usability: UI must be comfortably usable on mobile; openable as a native mobile app, supporting push notifications in the background (even if app is closed)
+    \item Accessibility: UI must follow best practices supporting usage with assistive technologies such as screen readers, keyboard only etc
+    \item Extensibility: The whole system should be easy to maintain and add new features; feature comprehensive logging and scale to add more providers
+    \item Cost: Cost of running the service should be minimised while retaining required functionality.
+\end{itemize}
 \section{High-level overview}
 \begin{figure}
     \centering
