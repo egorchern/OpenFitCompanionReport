@@ -127,7 +127,7 @@ The following non-functional requirements for the system were gathered by inspec
     \label{fig:1}
     
 \end{figure}
-Overall, the architecture is considered event-driven. Computation only needs to happen in response to an external event. This is enabled by providers providing Webhook integrations. Essentially, the backend gets a notification from providers whenever there is new data available from them. The following is the diagram together with sample data exchanged: \ref{fig:1}
+Overall, the architecture is considered event-driven microservices. Computation only needs to happen in response to an external event. This is enabled by providers providing Webhook integrations. Essentially, the backend gets a notification from providers whenever there is new data available from them. The microservices approach allows for much stronger fault tolerance, whereby a fault in one part, does not bring the entire service down; For example, a bug in interfacing with the providers won't prevent the user from accessing the UI and the associated API endpoint with database. It is also far cheaper than monolithic service. The following is the diagram together with sample data exchanged: \ref{fig:1}
 
 Cloud deployed backend service receives notifications from providers, containing information that allows atomic processing of that notification. It does not matter what other requests came before or if any are executing at the moment. 
 
@@ -145,7 +145,7 @@ Ultimately, the data is transformed into useful information (insight) using usin
 
 \section{Back-end}
 \subsection{Compute}
-Because the system is event-driven, we can utilise serverless function as the main computing units in the backend; For AWS that is Lambda. Using Lambda is the most cost-effective option; it allows paying only for execution time down to milliseconds, free data out transfer to other AWS services. One disadvantage are cold starts, when a function is called for the first time in a while, it has increased latency due to some set-up, from my experiments it's around 400ms on average; and that happens for all Lambda functions, so if there is a chain of such functions called one after another, the latency will stack up and be quite noticeable. AWS provides the "Provisioned Concurrency", making sure that n functions are kept initialised and ready to respond at any time; however, it has a separate costing scheme similar to servers, whereby you pay by the second even if the function is never called. As per project aims, minimising cost is more important so the latency is something that is just tolerated.
+Because the system is event-driven and microservices focused, serverless functions are used the main computing units for the the backend; For AWS that is Lambda. Using Lambda is the most cost-effective option; it allows paying only for execution time down to milliseconds, free data out transfer to other AWS services. One disadvantage are cold starts, when a function is called for the first time in a while, it has increased latency due to some set-up, from my experiments it's around 400ms on average; and that happens for all Lambda functions, so if there is a chain of such functions called one after another, the latency will stack up and be quite noticeable. AWS provides the "Provisioned Concurrency", making sure that n functions are kept initialised and ready to respond at any time; however, it has a separate costing scheme similar to servers, whereby you pay by the second even if the function is never called. As per project aims, minimising cost is more important so the latency is something that is just tolerated.
 \subsection{Persistance}
 For persistance, DynamoDB is used. Because the service is meant to be used by a single user who is the owner of the self-deployed infrastructure, there is no need to identify to which user the row of data belongs to. Since DynamoDB, like most NoSQL databases does not support composite keys i.e keys that are made from 2+ fields; meaning that complexity has to be handled client-side. For example, using field1 and field2 as PK involves having single field PK and using something like "field1\_\_DELIM\_\_field2" as the value, and checking that delimiting string does not form naturally (which is unlikely) from fields values to ensure uniqueness. To improve robustness a simple client-side schema that relies on Typescript classes was designed. Primary key schema is derived by considering access patterns to that table. For example, with health data: \ref{fig:schema}, the typical functionality is querying a certain data type (sleep, activity) originating from a certain provider between a range of dates; using the key schema in the diagram, this typical request can be handled efficiently by setting composite partition key and using DynamoDB range query of BETWEEN with no need for expensive client-side filtering. 
 \begin{figure}
@@ -158,26 +158,45 @@ For persistance, DynamoDB is used. Because the service is meant to be used by a 
 \end{figure}
 \subsection{Unifying}
 Although data from all devices is stored and can be viewed separately, for many purposes such as AI insights there needs to be a single row for each date that is treated as ground-truth. For this, measurements from all devices are averaged out and stored under "Unified" Provider. 
+\subsection{Technologies}
+
 \subsection{Architecture}
 \begin{figure}
     
     \centering
     \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{../images/backend.pdf}
-    \caption{Backend Architecture Diagram}
+    \caption{Back-end Architecture Diagram}
     \label{fig:backend}
     
 \end{figure}
 Breaking down purpose of each component in \ref{fig:backend}: (Note: Some of the backend components are in, as to not clutter the diagram and semantically they are more about interaction with the frontend.)
 \begin{itemize}
     \item {WithingsAdapter \& OuraAdapter: Software classes for abstracting complexities of interfacing with external providers - Adapter pattern. Different providers require different: formats for the request, authentication, attribute unit conversions, etc. These adapters handle such intricacies while providing an easy, consistent interface.}
-    \item {WithingsNotificationProcessor \& OuraNotificationProcessor Lambdas: Providers send HTTP request to a callback url specified when creating a webhook. These functions are for handling those notification HTTP requests, extracting relevant information and passing it to the SNS. There are 2 of them because notifications from different providers require different processing. Uses adapter components.}
+    \item {WithingsNotificationProcessor \& OuraNotificationProcessor Lambdas: Providers send HTTP request to a callback url specified when creating a webhook. These functions are for handling those notification HTTP requests, extracting relevant information and passing it to the SNS. There are 2 of them because notifications from different providers require different processing. Uses adapter components for handling this different processing.}
     \item {ForwardNotification SNS \& NotificationDLQ: Decouples the system as Lambdas directly invoking other Lambdas is a bad practice: worse observability, harder exception handling, etc. SNS is preferable to SQS, because it fits in a serverless architecture better and costs less due to it being a push model rather than SQS polling. Failed requests from SNS are sent to the Dead-Letter-Queue and saved so that they can be re-processed later; this allows the system to tolerate external services faults.}
-    \item {ProcessNotifcation Lambda: Triggered by notification, uses adapters to request data item(s) from providers and stores in the database.}
+    \item {ProcessNotifcation Lambda: Triggered by notification, uses adapters to request data item(s) from providers and stores it in the database. For example, Withings uses OAUTH, with authentication tokens alive for 4 hours; if required, refresh the authentication token before doing the request. Adjusts/creates unified measurement on every invocation. Performs a manual poll of DLQ, executes any notifications that are in the queue. A manual poll is preferred because it does not cost nearly as much as automatic polling of the DLQ, however the disadvantage is the increased latency, as failed notifications from DLQ won't be automatically re-tried; they will only be re-tried on the next normal notification received. }
 \end{itemize}
-
+So, integrating more providers comes down to only writing adapter implementation for them, the rest of the architecture stays the same. This makes the system easily extendable to any number or kind of providers.
 \section{Front-end}
 \subsection{UI}
-\subsection{Notifying}
-\subsection{Reporting}
+For the user-facing application, the standard eight golden rules of interface design \cite{goldenRulesUI} were followed when applicable, as well as striving to be minimalistic and only relevant details that can be scanned on the page quickly, as many other similar product offerings included way too much unneeded information on the screen at once. 
+\subsection{Technologies}
+The application is a PWA implemented using React, Typescript and other application specific libraries. PWA allowed the application to be installable and used as a native app on any device: pc, android, etc. Offering native functionalities such as background running and push notifications, while implemented as a website using standard platform-agnostic technologies instead of making dedicated native app for each platform; this enhances maintainability, as there is no need to maintain multiple versions for different platforms. Also, web-development is more widespread than native app development, allowing greater number of people to potentially contribute to this open-source project. Similarly to the backend, Typescript offers static type safety in an otherwise statically unsafe JavaScript language, which enhances maintainability and robustness by preventing typing related bugs. React allows writing UI components in a declarative style, without worrying about efficient low-level implementations for updating the DOM; also promoting great code reusability through components, which improves readability by decreasing number of lines of code. A number of other smaller libraries were used to not re-invent the wheel for the needed functionality, and instead use well-tested and well-documented libraries. For example, Chart.js was used extensively for creating graphs that were modern looking, easy to use and performant. 
+\subsection{Architecture}
 
-TODO: Do this chapter
+\begin{figure}
+    
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{../images/frontend.pdf}
+    \caption{Front-end Architecture Diagram}
+    \label{fig:frontend}
+    
+\end{figure}
+Breaking down purpose of each component in \ref{fig:frontend}:
+\begin{itemize}
+    \item {Authentication: The website is using HTTPS, meaning that all of the contents are securely encrypted. The website is deployed on the internet, ensuring that only the owner has access to any data is done via a simple secret key; again this is possible because the system is meant to be used by only one user, otherwise there would need to be a more sophisticated authentication system. The Backend once generates a random 256 character string containing a diverse set of capitalized characters, numbers and special symbols; it is then configured to only accept requests if authorization header contains this secret key. The the user needs to set the same key in the frontend.}
+    \item {Push-Notifications: Firstly, user's browser asks permission to send notifications, then push subscription is registered with the browser's push service and the information sent to backend and saved in database. Now, the backend can proactively send notifications to the user's browser using the standard protocol - WebPush, authenticated using VAPID. This is done on regular schedule which is handled by the AWS EventBridge Scheduler. Users are notified of: Daily Report, Weekly Report and activity reminders. }
+    \item {Hosting: The website is hosted using AWS Amplify. It allows configuring CI/CD pipeline which consists of creating an optimised site build on pushes to every release GitHub branch. It also automatically handles typical frontend server functions such as file compression to minimise network traffic, assigning static version numbers to files to force client browser's to invalidate their outdated cached versions of those files.}
+    \item {Export: Firstly, On the backend, All rows of the healthData table are fetched page by page, since DynamoDB restricts a single request to a maximum of 1MB. Then JSON data is converted into CSV using a library and that file is uploaded to a AWS S3 bucket and a one-time download url is returned to the front-end. To minimise costs, the bucket is configured to delete items 30 minutes after creation. S3 is used instead of directly returning binary blob from Lambda, because there is a 6MB maximum restriction set on Lambda's response body, whereas S3 does not have any file size restriction; although, in my case, around 4 months of data from 2 devices weighted around 120kb, it could reach the limit given more providers are integrated and more time passed. Also the speed of download is much faster via S3 as it is a distributed system specifically designed for handling files.}
+\end{itemize}
+\section{AI}
