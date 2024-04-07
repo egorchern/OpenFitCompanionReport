@@ -14,19 +14,17 @@ A nudge is “any aspect of the choice architecture that alters people's behavio
 \section{Devices Used}
 \subsection{Withings}
 \subsection{Oura}
-\section{Cloud Infrastructure}
-Cloud computing is a model for enabling convenient, on-demand network access to a shared pool of configurable computing
-resources (e.g., networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal
-management effort or service provider interaction. \cite {cloudDef}
-Using cloud for the software service infrastructure has the benefit of off-loading complexity to cloud providers instead of handling it yourself. The services they provided are characterized as follows \cite{cloudServicesCategories}: 
-\begin{itemize}
-    \item 
-\end{itemize}
-\subsection{Software Requirements}
+\section{Software Requirements}
 There 3 different types of requirements relevant to the domain of software: user requirement describing goal that specific class of user must be able to perform, functional requirement describing what developers must implement to enable users to accomplish tasks (user requirements), Business requirements describing high-level business objective of the organization that builds the system and optionally non-functional requirements, describing more qualitative features the system should have \cite{wiegers2013software}. Business requirements are not relevant to this project, as the main idea is open-source and self-deployment, meaning the project won't bring any commercial value to the creators. 
 In general, requirements engineering has shown to improve design performance by facilitating sensemaking (learning about the project context)
 User requirements can be understood by non-technical person. They can be represented using user stories, use cases and event-response tables. User story represent requirements using a simple textual template: "As a <role> I can <capability>, so that <receive benefit>" \cite{userStories}. Acceptance criteria may also be attached to a user story, containing details under which testable conditions the story can be considered completed \cite{Kannan2019User}. One of the popular templates for an acceptance criteria is: " Given <conditions>, When <action taken>, Then<outcome of action taken>". Although many practitioners testify that the technique is effective, improving productivity metrics within the team; however, it is only a perceived effectiveness that is not scientific \cite{userStories}.
 Functional requirements are more technical, and are intended to be used as description of a system that engineers need to implement. \cite{wiegers2013software}. Although purely textual representations exist, more detailed representations that utilize diagrams are preferred. (System) Use Case Diagram is a UML diagram used to specify functionality offered by the system. \cite{malan2001functional}. Requirements with lots of conditionals can be represented as flow chart, or if the requirement is simple, it could be represented as a sentence in the style of user story. 
+
+\section{Cloud}
+Cloud computing is a model for enabling convenient, on-demand network access to a shared pool of configurable computing
+resources (e.g., networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal
+management effort or service provider interaction. \cite {cloudDef}
+Using cloud for the software service infrastructure has the benefit of off-loading complexity to cloud providers instead of handling it yourself. The services they provided are characterized as follows \cite{cloudServicesCategories}: 
 
 
 \subsection{Cloud Providers}
@@ -40,7 +38,8 @@ I chose AWS for this project for the following reasons:
     \item{AWS has the best security system [cite], mainly due to IAM service, allowing for tight control of what a resource allowed to access in the infrastructure. }
     \item{if used under similar conditions, such as hosting the database in the same region in all comparisons, AWS has among the best quantative performance metrics, such as availability, latency etc \cite{CloudMetrics}  }
 \end{itemize}
-\subsection{Serverless}
+\subsection{Components}
+DynamoDB
 \subsection{Security}
 Software Security is important, especially in the context of this project that deals with sensitive health data. Generic web-accessible recommendations should apply to this project, such as encryption, xss, etc. However, deploying the application on the cloud presents new security related challenges, which a lot of companies suffer from [cite]. 
 \section{LLMs}
