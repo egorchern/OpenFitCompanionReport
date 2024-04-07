@@ -25,8 +25,8 @@ Cloud computing is a model for enabling convenient, on-demand network access to 
 resources (e.g., networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal
 management effort or service provider interaction. \cite {cloudDef}
 Using cloud for the software service infrastructure has the benefit of off-loading complexity to cloud providers instead of handling it yourself. The services they provided are characterized as follows \cite{cloudServicesCategories}: 
-
-
+\subsection{Serverless Microservices}
+% TODO add that it is microservice, adds fault tolerance.
 \subsection{Cloud Providers}
 There are 3 major providers in this space: AWS, Azure and GCP. They fall into public cloud category, similar to utility services like Electricity, they are available for use to anyone, be it individual developer or a company. We are relying on third-parties to handle things such as legal compliance, disaster management etc. Providers outline their legal promises in the document called Service Level Agreement (SLA) \cite{cloudSLA}. Outlining major cloud provider's differences:
 \begin{itemize}
@@ -39,7 +39,10 @@ I chose AWS for this project for the following reasons:
     \item{if used under similar conditions, such as hosting the database in the same region in all comparisons, AWS has among the best quantative performance metrics, such as availability, latency etc \cite{CloudMetrics}  }
 \end{itemize}
 \subsection{Components}
-DynamoDB
+\begin{itemize}
+    \item Lambda: Serverless function offering which allows deployment of microservices without need of managing servers with pay only for what you use pricing structure \cite{LambdaCostSave}. Allows saving up to 77.08\% compared to traditional monolithic server \cite{LambdaCostSave}.
+    \item DynamoDB: a fully managed NoSQL database that provides predictable and super-fast performance with unified scalability; Defining Characteristics: Eventually consistent, AP in CAP classification and key-based access focus \cite{DynamoDB}. Tables are schemaless except for the Primary key, which has to be unique among the rows; it may consist of Partition key or composite of Partition key + Sort key, with partition determining internal physical storage partition and items being sorted in order via sort key attribute \cite{awsDynamoWebsite}. Was chosen due to: well integrated in AWS infrastructure, very low latency and covered by Free Tier.
+\end{itemize}
 \subsection{Security}
 Software Security is important, especially in the context of this project that deals with sensitive health data. Generic web-accessible recommendations should apply to this project, such as encryption, xss, etc. However, deploying the application on the cloud presents new security related challenges, which a lot of companies suffer from [cite]. 
 \section{LLMs}
