@@ -279,12 +279,7 @@ Documentation:
         this is not recommended because of the error message issue.
         See http://app.uio.no/ifi/texcount/faq.html for details.
 }
-%% We need >15mm  margins except on the binding edge, where it is >40mm
-\oddsidemargin 15truemm \evensidemargin 0truemm
-\marginparwidth 40pt \marginparsep 10pt
 \topmargin 0truemm \headsep 10truemm
-\textheight 224truemm \textwidth 145truemm
-
 %% Disallow page breaks at hyphens (this will give some underfull vbox's,
 %% so an alternative is to use \brokenpenalty=100 and manually search
 %% for and fix such page breaks)

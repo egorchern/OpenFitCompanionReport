@@ -70,14 +70,14 @@ The following functional requirements were derived so that user requirements cou
 \begin{figure}
     
     \centering
-    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{../images/viewFunc.pdf}
+    \includegraphics[width=0.9\textwidth,keepaspectratio]{../images/viewFunc.pdf}
     \caption{View data use case UML diagram}
     \label{fig:2}
 \end{figure}
 \begin{figure}
     
     \centering
-    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{../images/exportDataFunc.pdf}
+    \includegraphics[width=\textwidth,keepaspectratio]{../images/exportDataFunc.pdf}
     \caption{Export data use case UML diagram}
     \label{fig:3}
     
@@ -85,7 +85,7 @@ The following functional requirements were derived so that user requirements cou
 \begin{figure}
     
     \centering
-    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{../images/reports.pdf}
+    \includegraphics[width=\textwidth,keepaspectratio]{../images/reports.pdf}
     \caption{Daily \& Weekly Reports use case UML diagram}
     \label{fig:4}
     
@@ -93,7 +93,7 @@ The following functional requirements were derived so that user requirements cou
 \begin{figure}
     
     \centering
-    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{../images/ai.pdf}
+    \includegraphics[width=0.95\textwidth,keepaspectratio]{../images/ai.pdf}
     \caption{AI Inference functionality Flow Chart}
     \label{fig:5}
     
@@ -103,7 +103,7 @@ The following functional requirements were derived so that user requirements cou
 \begin{figure}
     
     \centering
-    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{../images/workouts.pdf}
+    \includegraphics[width=\textwidth,keepaspectratio]{../images/workouts.pdf}
     \caption{Activity plan use case UML diagram}
     \label{fig:6}
     
@@ -122,7 +122,7 @@ The following non-functional requirements for the system were gathered by inspec
 \begin{figure}
     
     \centering
-    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{../images/highLevel.pdf}
+    \includegraphics[width=0.95\textwidth,keepaspectratio]{../images/highLevel.pdf}
     \caption{High-Level architecture diagram}
     \label{fig:1}
     
@@ -144,27 +144,29 @@ Ultimately, the data is transformed into useful information (insight) using usin
 \end{itemize}
 
 \section{Back-end}
+
+
 \subsection{Compute}
 Because the system is event-driven and microservices focused, serverless functions are used the main computing units for the the backend; For AWS that is Lambda. Using Lambda is the most cost-effective option; it allows paying only for execution time down to milliseconds, free data out transfer to other AWS services. One disadvantage are cold starts, when a function is called for the first time in a while, it has increased latency due to some set-up, from my experiments it's around 400ms on average; and that happens for all Lambda functions, so if there is a chain of such functions called one after another, the latency will stack up and be quite noticeable. AWS provides the "Provisioned Concurrency", making sure that n functions are kept initialised and ready to respond at any time; however, it has a separate costing scheme similar to servers, whereby you pay by the second even if the function is never called. As per project aims, minimising cost is more important so the latency is something that is just tolerated.
+\subsection{Technologies}
+Typescript running on NodeJS was the chosen programming language. NodeJS has a very use to use asynchronous programming model, which is preferable in this use case, as most tasks are I/O bound; so, many other tasks can be executed in parallel, such as fetching multiple rows from the database. Typescript provides static type safety, which helps to avoid bugs in an otherwise type unsafe JavaScript; as well as provide better developer experience, with enhanced autocompletion in a modern IDE, increasing speed of development and making the project more attractive to potential open-source contributors.
 \subsection{Persistance}
 For persistance, DynamoDB is used. Because the service is meant to be used by a single user who is the owner of the self-deployed infrastructure, there is no need to identify to which user the row of data belongs to. Since DynamoDB, like most NoSQL databases does not support composite keys i.e keys that are made from 2+ fields; meaning that complexity has to be handled client-side. For example, using field1 and field2 as PK involves having single field PK and using something like "field1\_\_DELIM\_\_field2" as the value, and checking that delimiting string does not form naturally (which is unlikely) from fields values to ensure uniqueness. To improve robustness a simple client-side schema that relies on Typescript classes was designed. Primary key schema is derived by considering access patterns to that table. For example, with health data: \ref{fig:schema}, the typical functionality is querying a certain data type (sleep, activity) originating from a certain provider between a range of dates; using the key schema in the diagram, this typical request can be handled efficiently by setting composite partition key and using DynamoDB range query of BETWEEN with no need for expensive client-side filtering. 
 \begin{figure}
     
     \centering
-    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{../images/dataSchema.pdf}
+    \includegraphics[width=0.9\textwidth,height=\textheight,keepaspectratio]{../images/dataSchema.pdf}
     \caption{HealthData Table client-side Schema}
     \label{fig:schema}
     
 \end{figure}
 \subsection{Unifying}
 Although data from all devices is stored and can be viewed separately, for many purposes such as AI insights there needs to be a single row for each date that is treated as ground-truth. For this, measurements from all devices are averaged out and stored under "Unified" Provider. 
-\subsection{Technologies}
-
 \subsection{Architecture}
 \begin{figure}
     
     \centering
-    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{../images/backend.pdf}
+    \includegraphics[width=0.95\textwidth,height=\textheight,keepaspectratio]{../images/backend.pdf}
     \caption{Back-end Architecture Diagram}
     \label{fig:backend}
     
@@ -187,7 +189,7 @@ The application is a PWA implemented using React, Typescript and other applicati
 \begin{figure}
     
     \centering
-    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{../images/frontend.pdf}
+    \includegraphics[width=0.7\textwidth,keepaspectratio]{../images/frontend.pdf}
     \caption{Front-end Architecture Diagram}
     \label{fig:frontend}
     
