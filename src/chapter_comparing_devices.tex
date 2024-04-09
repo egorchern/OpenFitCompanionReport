@@ -14,7 +14,7 @@ Python with pandas, numpy and statsModels were used for analysis. To explore the
 \begin{figure}
     
     \centering
-    \includegraphics[width=\textwidth,keepaspectratio]{../images/bland_altman_steps.png}
+    \includegraphics[width=\textwidth,keepaspectratio]{../images/bland_altman_steps.pdf}
     \caption{Bland-Altman Plot for Steps}
     \label{fig:blandAltmanSteps}
     
@@ -24,7 +24,7 @@ For steps \ref{fig:blandAltmanSteps}, the average difference between devices is 
 \begin{figure}
     
     \centering
-    \includegraphics[width=\textwidth,keepaspectratio]{../images/bland_altman_moderateActivity.png}
+    \includegraphics[width=\textwidth,keepaspectratio]{../images/bland_altman_moderateActivity.pdf}
     \caption{Bland-Altman Plot for Moderate Activity Seconds}
     \label{fig:blandAltmanSoftActivity}
     
@@ -32,12 +32,12 @@ For steps \ref{fig:blandAltmanSteps}, the average difference between devices is 
 
 For moderate activity \ref{fig:blandAltmanSoftActivity}, the difference is more significant, with the watch recording 779 seconds (13 minutes) more of moderateActivity on average. Although the difference might seem small, when considering how it translates into MET minutes, it has important implications. For example, with a daily activity goal of 178 MET minutes, and using MET multiplier of 3 for moderate activity, when the watch reached the goal, the ring only recorded 139 ($178 - 13 * 3$), which is 22\% away from reaching the goal; this adds up to missing 273 MET minutes in a week. Interpretation of this depends on which device is more accurate, if watch is accurate then the ring underinflates, which is better than the other option that the ring is accurate and the watch overinflates, and of course both could be slightly away from true value; for example, assuming the ring is more accurate, users that use the watch might feel confident that they reached their activity goals with purpose of losing weight, when in fact they are missing a sizeable chunk of exercise, which could sabotage their confidence, as they might be losing less weight in reality than predicted. On a personal note, I do feel that the ring is more accurate, as I have manually timed my deliberate moderate activity time on a single day, with the watch giving 27 minutes, ring giving 18 and manual being 20.
 
-Although care has been made to collect high quality data, there might be user errors. Sometimes the watch could have lost contact with the skin due to loose strap for comfortable wear, or some device turned off due to charge running out. Also, development of the core product was still underway, so maybe some changes caused some notifications to be lost. To combat outliers, z-scores are computed for each data point, and values that that have $-2 <= z <= 2$ are removed, i.e remove data points more than 2 stds. away. The following are Bland-Altman plots with outliers removed for the examined properties: Steps \ref{fig:blandAltmanStepsNoOutliers} and Moderate Activity \ref{fig:blandAltmanModerateActivityNoOutliers}. The difference in step count went down to 114 which is a neglible difference, whereas difference in the moderate activity remained relatively high at 10 minutes, suggesting that there is some systematic difference between devices.
+Although care has been made to collect high quality data, there might be user errors. Sometimes the watch could have lost contact with the skin due to loose strap for comfortable wear, or some device turned off due to charge running out. Also, development of the core product was still underway, so maybe some changes caused some notifications to be lost. To combat outliers, z-scores are computed for each data point, and values that that have $-2 <= z <= 2$ are removed, i.e remove data points more than 2 stds. away from the mean. The following are Bland-Altman plots with outliers removed for the examined properties: Steps \ref{fig:blandAltmanStepsNoOutliers} and Moderate Activity \ref{fig:blandAltmanModerateActivityNoOutliers}. The difference in step count went down to 114 which is a neglible difference, whereas difference in the moderate activity remained relatively high at 10 minutes, suggesting that there is some systematic difference between devices.
 
 \begin{figure}
     
     \centering
-    \includegraphics[width=\textwidth,keepaspectratio]{../images/bland_altman_steps_no_outliers.png}
+    \includegraphics[width=\textwidth,keepaspectratio]{../images/bland_altman_steps_no_outliers.pdf}
     \caption{Bland-Altman Plot for Steps with previous outliers removed}
     \label{fig:blandAltmanStepsNoOutliers}
     
@@ -45,12 +45,29 @@ Although care has been made to collect high quality data, there might be user er
 \begin{figure}
     
     \centering
-    \includegraphics[width=\textwidth,keepaspectratio]{../images/bland_altman_moderateActivity_no_outliers.png}
+    \includegraphics[width=\textwidth,keepaspectratio]{../images/bland_altman_moderateActivity_no_outliers.pdf}
     \caption{Bland-Altman Plot for Moderate Activity Seconds with previous outliers removed}
     \label{fig:blandAltmanModerateActivityNoOutliers}
     
 \end{figure}
 % TODO: background for bland altman, outlier detection - zscore, two one sided t-tests for equivalence bound, t-test.
 % Lambda Region: Virginia less expensive that london. dynamo configured as provisioned minimum readers and writers.
+\subsection{Average Percentage Difference}
+Overall average difference between devices is 26.1\%, as calculated from the empirical data. The calculation was performed as follows: 
+\begin{itemize}
+    \item Remove outliers using zscore
+    \item Calculate percentage difference: $\text{diffDate} = max(a,b) / min(a,b) \mod 1$. Modulo 1 extracts the fraction by which the larger value is bigger than smaller one.
+    \item Calculate average percentage difference: $\sum_{n=1}^{N} \text{diffDate}_n / N$
+\end{itemize}
+\subsection{Statistical Testing \& Results}
+Purely empirically, we could conclude that devices are different as we have a number: 26.1\%. However, statistical significance at a certain confidence needs to be considered to make more informed and formal conclusions. The following hypothesis testing problem was formulated for every measured property, such as steps: 
 
+Let $\mu_1$ be the true mean of watch's measurement of the inspected property, $\mu_2$ be the true mean of the ring's measurement of the inspected property
+\begin{align*}
+    H_0:\mu_1 = \mu_2 \\
+    H_1: \mu_1 \neq \mu_2
+\end{align*}
+
+
+Two-tailed, Paired t-test was used to test this hypothesis. Student's t-test is preferred over Z-test because it does not require knowing the population variance, and performs better with smaller sample size, and the current sample size of 60 is probably considered small. Paired version is used because measurments with different devices were taken from the same subject (me) i.e repeated measurement, making the measurements related. Also equivalence bounds were calculated using Two-one-sided t-tests (TOST), which represent bounds of allowed tolerance, after which devices are equal; this is best shown via an example later on. Results are shown and discussed in the Evaluation chapter \ref{}.
 
