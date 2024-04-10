@@ -48,18 +48,34 @@ On a high-level, those are the aims I wanted my application to fullfil.
     \hline
     Aim & Criteria for success  \\ 
     \hline
-     Autonomously sync in real-time with several fitness devices, storing data in our database and producing single unified measurement as well & Concrete implementation to sync with Withings And Oura products, creating unified measurement by averaging.  Infrastructure to allow easy implementation of sync with other providers\\ 
+     1: Autonomously sync in real-time with several fitness devices, storing data in our database and producing single unified measurement as well & Concrete implementation, with example shown, to sync with Withings And Oura products, creating unified measurement by averaging.  Infrastructure to allow easy implementation of sync with other providers\\ 
     \hline
-     Report to the user about their progress via notification, providing useful metrics and insights & Implementation to send push notification to the user's phone, then providing metrics on a separate page. Such as if the user fulfilled expected daily activity levels. \\ 
+     2: Report to the user about their progress via notification, providing useful metrics and insights & Implementation to send push notification to the user's phone, then providing metrics on a separate page. Such as if the user fulfilled expected daily activity levels. \\ 
     \hline
-     Integrate AI to analyse the data and provide accurate and effective feedback about the user's health and well-being & Concrete implementation using GPT4, provides feedback for each day, week and month. Feedback should be factual, mention specific metrics/measurements, and include positive areas and areas that the user can improve on.\\
+     3: Integrate AI to analyse the data and provide accurate and effective feedback about the user's health and well-being & Concrete implementation using GPT4, provides feedback for each day, week and month. Feedback should be factual, mention specific metrics/measurements, and include positive areas and areas that the user can improve on.\\
     \hline
-     Nudge the user to participate in physical activities by recommending the best activities/exercises depending on a variety of customizable parameters and data available &  Implementation to send push-notifications throughout times of day, linking to AI planned activity plan for that time. Activities should have descriptions and videos on how to perform them. Activities should be well-suited for the user's preferences and the data collected.\\
+     4: Nudge the user to participate in physical activities by recommending the best activities/exercises depending on a variety of customizable parameters and data available &  Implementation to send push-notifications throughout times of day, linking to AI planned activity plan for that time. Activities should have descriptions and videos on how to perform them. Activities should be well-suited for the user's preferences and the data collected.\\
     \hline
-     Minimise the cost of running the service & Compare the cost of operating our service with the costs of competing similar systems. They should provide similar functionality in order for the comparison to be fair. \\
+     5: Minimise the cost of running the service & Compare the cost of operating our service with the costs of competing similar systems. They should provide similar functionality in order for the comparison to be fair. \\
     \hline
+     6: Service should be secure. Preventing unauthorized access to data or functionality & Data should only be accessible by the sole authorized user - the Owner. Utilize automatic security testing tools as well as manual review to demonstrate compliance.\\
+    \hline
+     7: Using the data gathered by the service, perform data analysis to compare measurement differences between devices. &  Comprehensive data analysis is performed, with evaluation of results as well as limitations of the analysis.\\
+     \hline
+     8: The service shall match the state-of-the-art commercial solutions in terms of performance, UI/UX and ease-of-use & Compare performance, UI and ease-of-use metrics/quality with state-of-the-art standard or products  \\
+     \hline
     \end{tabularx}
 \end{center}
+\section{Evaluation Strategy}
+There is an evaluation for all of the aims, discussing whether criteria for success were met.
+\begin{itemize}
+    \item 1, 2: Functionality examples will be provided as well as pointing out some problems/limitations: \ref{}
+    \item 3, 4: AI response quality will be examined, with examples of responses provided. 
+    \item 5: Cost analysis will be performed, calculating monthly cost of running the service from my actual personal use. This will be compared with the cost of competing products.
+    \item 6: Security analysis, using automatic web vulnerability scanners, as well as manual review of IAM roles for adherence to least privilege principle
+    \item 7: Evaluation of data analysis results will be performed, stating significance of findings and limitations.
+    \item 8: Front-end's performance, UI and system's set-up as a new user will be evaluated discussed
+\end{itemize}
 
 
 
