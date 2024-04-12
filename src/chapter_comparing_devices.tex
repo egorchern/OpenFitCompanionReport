@@ -52,11 +52,12 @@ Although care has been made to collect high quality data, there might be user er
 \end{figure}
 % TODO: background for bland altman, outlier detection - zscore, two one sided t-tests for equivalence bound, t-test.
 \subsection{Average Percentage Difference}
-Overall average difference between devices is 26.1\%, as calculated from the empirical data. The calculation was performed as follows: 
+Overall average difference between devices is 26.1\%, as calculated from the empirical data. Percentage differences per property: \ref{fig:empirical}. The calculation was performed as follows: 
 \begin{itemize}
-    \item Remove outliers using zscore
+    \item Remove outliers using zscore.
+    \item $a = \text{max}(a, 0.00001)$, $b = \text{max}(b, 0.00001)$ - prevent division by 0 errors.
     \item Calculate percentage difference: $\text{diffDate} = max(a,b) / min(a,b) \mod 1$. Modulo 1 extracts the fraction by which the larger value is bigger than smaller one.
-    \item Calculate average percentage difference: $\sum_{n=1}^{N} \text{diffDate}_n / N$
+    \item Calculate average percentage difference: $\sum_{n=1}^{N} \text{diffDate}_n / N$.
 \end{itemize}
 \subsection{Statistical Testing \& Results}
 Purely empirically, we could conclude that devices are different as we have a number: 26.1\%. However, statistical significance at a certain confidence needs to be considered to make more informed and formal conclusions. The following hypothesis testing problem was formulated for every measured property, such as steps: 
@@ -66,7 +67,14 @@ Let $\mu_1$ be the true mean of watch's measurement of the inspected property, $
     H_0:\mu_1 = \mu_2 \\
     H_1: \mu_1 \neq \mu_2
 \end{align*}
-
+\begin{figure}
+    
+    \centering
+    \includegraphics[width=\textwidth,keepaspectratio]{../images/empiricalResults.pdf}
+    \caption{Empirical Differences Results}
+    \label{fig:empirical}
+    
+\end{figure}
 
 Two-tailed, Paired t-test was used to test this hypothesis. Student's t-test is preferred over Z-test because it does not require knowing the population variance, and performs better with smaller sample size, and the current sample size of 60 is probably considered small. Paired version is used because measurments with different devices were taken from the same subject (me) i.e repeated measurement, making the measurements related. Also equivalence bounds were calculated using Two-one-sided t-tests (TOST), which represent bounds of allowed tolerance, after which devices are equal; this is best shown via an example later on. Results: \ref{fig:results}.
 

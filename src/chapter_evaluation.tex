@@ -4,9 +4,15 @@
 \subsection{Automatic Vulnerability Scanners Testing}
 Automatic web application vulnerability and penetration testing software was used to test security of the application. The following results were obtained: 
 \begin{itemize}
-    \item Wapiti (Open-source, ): \ref{fig:wapiti} (note: screenshot is trimmed, the rest of the report showed 0 vulnerabilities)
+    \item Wapiti (Open-source): \ref{fig:wapiti} (note: screenshot is trimmed, the rest of the report showed 0 vulnerabilities)
     \item ZAP (Open-source, made by OWASP): \ref{fig:zap}
     \item Intruder (Commercial, Large-scale grade): \ref{fig:intruder}
+\end{itemize}
+Scanners were used to probe how a person on the internet could try to breach the website - Scanners were not run in authenticated mode, since the authentication is only possible by the owner - since there is only one user, no privilege elevation vulnerability is possible. No critical or high risk vulnerabilities were discovered. ZAP gave false positives with hidden files, which in-fact are just like index.html for amplify, those don't expose any sensitive info.  Addressing interesting findings one by one: 
+\begin{itemize}
+    \item Clickjacking: this is an exploit when the website is embedded via iframe on attacker's website and original ui elements are masked behind fake ones. Although no information or access is exposed, attackers may force spending openAI credits by masking send prompt button. It kind of requires a targeted attack on the owner, which is a bit unlikely but the fix is an easy one line change, so it should have been implemented.
+    \item Content-security policy (CSP): it is a primarily XSS mitigation, which in this application happens if the user willingly does it themselves or if providers get hacked and return XSS infected payloads. Although it is unlikely to happen, it is a quite easy fix and should have been implemented as well. 
+    \item Strict Transport Security: Basically force HTTPS and don't allow HTTP. The default is HTTPS, and if the user purposefully goes to the HTTP version, it is mostly user error, however this may happen with less technical users. This was missed and should have been implemented
 \end{itemize}
 \begin{figure}
     
@@ -33,9 +39,138 @@ Automatic web application vulnerability and penetration testing software was use
     
 \end{figure}
 \subsection{IAM}
+AWS IAM access analyzer was used to find services that can be invoked externally: \ref{fig:awsexternal}. No issues were found, as those are the entrypoints to the system and no other service is exposed to the public. Note: test is a misnamed service for Withings notification handle and requestTokens is OAUTH callback handler for Withings as well.
+
+Unfortunately, I was not able to find any AWS IAM role analyser for least privilege, so it was done manually: \ref{table:IAMroles}. All roles only had the minimal necessary permissions to perform their function. The system does not use virtual network so all functions can potentially make external requests - however, it should not be an issue, as external entities can't request into the network except for designated endpoints.
+\begin{figure}
+    
+    \centering
+    \includegraphics[width=1\textwidth,keepaspectratio]{../images/IAM_external.png}
+    \caption{AWS Access analyzer - External access results}
+    \label{fig:awsexternal}
+    
+\end{figure}
+\begin{longtblr}[
+    caption={IAM roles},
+    label={table:IAMroles}
+] {
+    colspec = {|X|X|},
+    rowhead = 1,
+    hlines,
+}
+    Services & Permissions \\
+    ApiEndpoint & DB: UserData: Read and Write; HealthData: Read; S3 exportBucket create object \\
+    WithingsNotificationProcessor \& OuraNotificationProcessor & SNS publish \\
+    ProcessNotification & DB: HealthData: Read and Write; Tokens: Read and Write; SQS: Read\\
+
+\end{longtblr}
 \section{Cost}
+
+\subsection{Core Service}
+Cost calculations were made using actual usage from February 2024, and pricing used is also from that period. Some services like cloudwatch (logging) or categories such as Amplify build artifacts, were used only for development and are not necessary to run the service, so they won't be in the list. Data export was done once. Table: \ref{table:awscost}
+\begin{longtblr}[
+    caption={AWS costs},
+    label={table:awscost}
+] {
+    colspec = {|X|X|X|},
+    rowhead = 1,
+    hlines,
+}
+    Service & Usage & Cost \\
+    Lambda & GB-seconds: 717 seconds; Requests: 4531 & 0.0129\$ \\
+    DynamoDB & Read capacity unit hours: 2160; Write capacity unit hours: 2160; Storage: 182KB & 1.6848\$ \\
+    Amplify & Data Out: 0.063GB & 0.00945\$ \\
+    SNS & Requests: 810 & 0.000405\$ \\
+    S3 & Storage: 0.003GB & 0.000069 \$ \\
+
+\end{longtblr}
+The total per month is: 1.7\$ or 1.29£. The only one that will increase with more usage is DynamoDB storage, however the health data is very light, with the entire table of 80 days weighing 120KB. AWS Always Free Tier covers all of the expenses for this typical usage, so actually 0£ are paid for the core application without AI. So, it can easily be used the same as aggregators like Google Fit or Apple Health, owning the data in your controlled infrastructure, without paying anything. However, it is worth to note that AWS can change any of the Free Tier reductions at any point, so minimising cost without it is still worth it.
+
+Using AI is where costs get more dire. At the time of writing, OpenAI charges 10\$ per 1M tokens with all GPT4 models, which is the one that is used. Due to the nature of RAG, the number of tokens used for a request varies, an average number of tokens is calculated from last 5 requests. Table: \ref{table:gptCosts} 
+\begin{longtblr}[
+    caption={GPT4 Costs},
+    label={table:gptCosts}
+] {
+    colspec = {|X|X|X|},
+    rowhead = 1,
+    hlines,
+}
+    Prompt & Tokens & Cost \\
+    Daily Feedback & 28643 tokens;  & 0.286\$ \\
+    Activity Plan & 29566 tokens; & 0.295\$ \\
+    Knowledge Retrieval & Files: 1;  & 0.2\$ \\
+\end{longtblr}
+So, the daily cost is 0.78\$ or 0.67£, translating to 20.15£ per month. That only accounts for automatic AI use, on-demand use through free-form chat would obviously increase this number. This is compared to other commercially available products that provide guidance in health and/or fitness, although they offer quite different degrees of personalisation, with the ones that have AI in the name offering much closer experience to my product ideal - \ref{table:costCompare}.
+\begin{longtblr}[
+    caption={Cost Comparison},
+    label={table:costCompare}
+] {
+    colspec = {|X|X|},
+    rowhead = 1,
+    hlines,
+}
+    Product & Monthly Cost \\
+    OpenFitCompanion & 20.15£ (AI, rest Free Tier)  \\
+    Apple Fitness+ & 9.99£ \\
+    MyFitnessPal & 16.34£ \\
+    EvolveAI & 19.99£ \\
+    CoachifyAI & 28.49£ \\ 
+    Withings+ & 8.95£
+
+\end{longtblr}
+Our product is not competitive with existing commercial products, only being cheaper than CoachifyAI. They would likely provide better quality insights due to more fine-tuned models and better rates with providers such as AWS. In order to compete in any sense, our solution would need to be very cheap, like 5£ per month maximum. I suspect that token counts are so bad because sometimes unnecessairy entries of health data are included, which we have no control of, as OpenAI says: "Retrieval currently optimizes for quality by adding all relevant content to the context of model calls. We plan to introduce other retrieval strategies to enable developers to choose a different tradeoff between retrieval quality and model usage cost." \cite{knowledgeRet}
 \section{Function}
+All of the functional aims and user requirements have been fulfilled.
+\section{Customisability}
+User requirements specified that all variables, configurations, etc should be easily customizable by a user, meaning it should be accessible to non-technical person, configuring through GUI. The following table summarises parameters in the system and whether they are fully customizable \ref{table:customizability}.
+\begin{longtblr}[
+    caption={Customizability of system},
+    label={table:customizability}
+] {
+    colspec = {|X|X|},
+    rowhead = 1,
+    hlines,
+}
+    Parameter & Customisable? \\
+    MET minutes target & Yes \\
+    Home equipment & Yes \\
+    Athleticism level & Yes \\
+    Gym days & Yes \\
+    Excluded activities & Yes \\
+    Daily Report notification time & No \\
+    Exercise notification time & No \\
+    Concentration of exercises & No \\
+    
+\end{longtblr}
+Scheduled events such as daily report notification as well as concentration of exercises (such as more exercises in the morning please) were hard-coded, as they would require a lot more work to implement. However, all else can be modified through GUI and that information is accurately reflected in insights.
 \section{Frontend Performance \& Accessibility \& UI}
+Lighthouse automated testing suite for web pages was used on every page, testing for mobile platform. However, SEO score was ignored, due to the nature of the application being a personal service rather than a public one. Screenshot of dashboard results \ref{fig:lighthouse}. Results are collated in a table: \ref{table:lighthouse}
+\begin{longtblr}[
+    caption={Lighthouse testing results},
+    label={table:lighthouse}
+] {
+    colspec = {|X|X|X|X|},
+    rowhead = 1,
+    hlines,
+}
+    Page & Performance & Accessibility & Best Practices \\
+    Dashboard & 93\% & 98\% & 96\% \\
+    Daily Report & 92\% & 100\% & 96\% \\
+    Weekly Report & 95\% & 100\& & 96\% \\
+    Profile & 93\% & 100\% & 96\% \\
+    Activity Plan (largest) & 82\% & 100\% & 96\% \\
+    AI Chat & 94\% & 100\% & 96\% \\
+
+\end{longtblr}
+Performance results are satisfactory, ensuring snappy feel even when used on mobile network. Unfortunately many similar health data aggregators are app only, therefore it is not possible to directly compare their performance against ours; but for reference, sites with dynamic content in forms of graphs - such as Investing.com, have performance scores of around 60 (with adblock enabled). The score drops on Activity plan page, mainly due to exercise video examples via YouTube embeds, view only rendering may help to alleviate this, by only rendering components in the view. React lazy component loading should have been used to push the performance score a bit higher.
+React lazy loading.
+\begin{figure}
+    
+    \centering
+    \includegraphics[width=1\textwidth,keepaspectratio]{../images/lightHouseMainPage.png}
+    \caption{Lighthouse test result for dashboard}
+    \label{fig:lighthouse}
+    
+\end{figure}
 \section{AI Insights Quality}
-\section{Analysis results}
-TODO: Do this chapter
+\section{Comparing Devices - Discussing results}
