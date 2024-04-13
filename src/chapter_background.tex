@@ -23,8 +23,34 @@ Sleep is made of many stages, but 3 large groups are: light sleep, deep sleep an
 \section{Devices Used}
 \subsection{Withings}
 \label{section:WithingsWatch}
+Withings ScanWatch was used for the project - \cite{withingsStorePage}. It is capable of recording: active minutes (soft, moderate and intense), steps, sleep quality score, sleep durations (light and deep), breathing disturbances during sleep, average heart rate, ECG (electrocardiogram - waveform of heart's electrical activity) and SPO2 (blood oxygenation). ScanWatch integrates a different device called Scan Monitor, which has CE medical certification in Europe and FDA clearance in the United States \cite{withingsStorePage}.  Scan Monitor has the following accuracy metrics published \cite{scanMonitor}:
+\begin{itemize}
+    \item ECG recording: IEC 60601-2-47 (Requirements for the Basic Safety and Essential Performance of Ambulatory Electrocardiographic Systems.) beat-to-beat QRS detection with F1-score of at least 99.19\% 
+    \item AFib: 98.16\% sensitivity in classifying AFib
+    \item Sinus Rhythm: 97.20\% specificity in classifying sinus rhythm.
+    \item With Studies performed by independent parties: HOPITAL GEORGES POMPIDOU and CENTRE CARDIOLOGIQUE DU NORD.
+\end{itemize}
+SPO2 accuracy is provided by this statement: "The measure of SpO2 in the range 70-100\% has been clinically validated on healthy adult volunteers, at rest against a laboratory co-oximeter.". Studies by Hypoxia Lab back this claim by validating against golden standards using traditional samples analysis.
+
+Other metrics do not seem to have any accuracy declarations. Assuming that those are derived by algorithms, rather than measured directly, by using medically certified measurements. For example, for breathing disturbances the website notes: "Our exclusive algorithm, developed with experts, computes the data from SpO2, heart rate, motion and breathing rate to measure breathing disturbances, an indicator of sleep apnea.". During the app set-up, only when enabling ECG, AFib and SPO2 you had to accept the accuracy document. This leads me to believe that only those metrics are highly accurate and certified medical-grade, while others are not.
+
+The watch has been used in peer-reviewed studies:
+\begin{itemize}
+    \item Examining if remote monitoring (using the watch + other) improved outcomes of patients undergoing hip and knee arthroplasty: statistically significant reduction in rehospitalization rate in the intervention arm \cite{withingsHospitalization}
+    \item Examine large cohorts for presence of Nocturia (waking up to pee at night) in natural settings using the watch: watch made it possible to make association. \cite{withingsNocturia}
+    \item Covid confinement adherence monitoring using the watch: used daily steps to find that after 2 weeks compliance decreased. \cite{withingsCovidConfinement}
+\end{itemize}
+
+
 \subsection{Oura}
 \label{section:OuraRing}
+Oura Generation 2 ring was used for the project - \cite{ouraStorePage}. Oura does not call the device "medical-grade" unlike Withings, since it carries a need for medical certification. Instead, they call it "research-grade". Oura publishes it's sleep tracking accuracy metrics, showing 79\% agreement with gold-standard polysomnography (PSG) for 4-stage sleep classification (wake, light, deep, and rapid eye movement (REM) sleep) \cite{OuraSleepAcc}. Also sleep heart rate and heart rate variability have high degrees of accuracy \cite{ouraHeartAcc}; the study also notes ring's memory limitation, as 2 days old data is lost if user doesn't open the app. Lastly, temperature readings has also been reported to be high accuracy, with near-perfect match with research-grade device at >99\% under lab conditions and 92\% in real world conditions \cite{ouraTemp}; however it is an internal validation study, meaning Oura did it themselves rather than an independent party, and it was done with only 16 individuals over 1 week.
+
+Oura was also used in peer-reviewed studies:
+\begin{itemize}
+    \item Used Oura ring to measure peripheral temperature of subjects who then reported COVID-19: showed wearable sensors (oura ring) can detect illness in absence of symptoms \cite{smarr2020feasibility}.
+    \item Used Oura ring to measure distal body temperature to predict pregnancy earlier than pregnancy test: able to generate hypothetical alert a median of 9 ± 3.9 days prior to the date at which individuals received a positive pregnancy test \cite{ouraPregnancy}.
+\end{itemize}
 \section{Software Requirements}
 There 3 different types of requirements relevant to the domain of software: user requirement describing goal that specific class of user must be able to perform, functional requirement describing what developers must implement to enable users to accomplish tasks (user requirements), Business requirements describing high-level business objective of the organization that builds the system and optionally non-functional requirements, describing more qualitative features the system should have \cite{wiegers2013software}. Business requirements are not relevant to this project, as the main idea is open-source and self-deployment, meaning the project won't bring any commercial value to the creators. 
 In general, requirements engineering has shown to improve design performance by facilitating sensemaking (learning about the project context)
