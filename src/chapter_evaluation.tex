@@ -219,17 +219,17 @@ Each page has been evaluated for UI quality by checking if all applicable golden
     rowhead = 1,
     hlines,
 }
-    Parameter & Customisable? \\
-    MET minutes target & Yes \\
-    Home equipment & Yes \\
-    Athleticism level & Yes \\
-    Gym days & Yes \\
-    Excluded activities & Yes \\
-    Daily Report notification time & No \\
-    Exercise notification time & No \\
-    Concentration of exercises & No \\
+    Page & Rules: Compliance \\
+    Dashboard & 1: Yes; 2: Maybe; 3: Yes; 8: Yes \\
+    Profile & 1: Yes; 2: Maybe; 3: Yes; 4: No; 5: Yes; 6: Yes; 8: Maybe \\
+    Daily Report &  1: Yes, 2: Maybe, 8: Yes \\
+    Weekly Report & 1: Yes, 2: Maybe, 8: Yes \\
+    Exercise Plan & 1: Yes; 2: Maybe, 8: Maybe \\
+    AI Chat & 1: Yes, 2: Maybe, 3: No, 4: No, 5: No, 6: No, 8: Yes \\
+
     
 \end{longtblr}
+To comment on a few interesting entries, universal usability compliance on any page is debatable, it can be used on any screen size and the language is quite simple to understand, however there are no internationalization such as other language versions or different date/calendar versions. AI chat was the worst performing one, as no feedback is displayed when user submits a prompt, only after manually refreshing the page the outcome is seen; also no reversal, no prevention of errors: users may put very long or complicated prompt that uses entire RAG file, which will burn through their OpenAI credits. 
 \section{AI Insights Quality}
 Providing quantifiable evidence of LLM response quality would be too complex and out of scope for this project. One good example and one bad example of an insight will be provided, as well as my qualitative thoughts about the insights after using the service as a normal user for 10 days. 
 \section{Comparing Devices - Discussing results}
