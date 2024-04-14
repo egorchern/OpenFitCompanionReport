@@ -29,6 +29,7 @@ One part of user story for weekly report that was not fulfilled was comparison w
     \label{fig:openFitCompanionSteps}
     
 \end{figure}
+
 \section{Security}
 \subsection{Automatic Vulnerability Scanners Testing}
 Automatic web application vulnerability and penetration testing software was used to test security of the application. The following results were obtained: 
@@ -173,6 +174,8 @@ User requirements specified that all variables, configurations, etc should be ea
     
 \end{longtblr}
 Scheduled events such as daily report notification as well as concentration of exercises (such as more exercises in the morning please) were hard-coded, as they would require a lot more work to implement. However, all else can be modified through GUI and that information is accurately reflected in insights.
+\subsection{Ease of set-up}
+Ideally, even a non-technical would be able to follow easy set-up steps and have an application running in the cloud. Unfortunately, the end product can't be classified as such. Creating and modification of AWS resources mainly happened on the web console through GUI. It was done to develop features fast, without learning tools such as Infrastructure as code. However, this meant that the infrastructure would not be reproducible. Fortunately, there is a service - Former2 that can analyse resources in an AWS account and create CloudFormation file, which can be used reproduce the same infrastructure in a brand new account. However, the service is not perfect and trying to deploy in a new account resulted in errors, which I didn't get enough time to fix by deadline. Also, the set-up requires manually registering an application with Withings while Oura simply provides a personal access token. This is not something that can be fixed, as automating it is illegal, as it is essentially botting. 
 \section{Frontend Performance \& Accessibility \& UI}
 Lighthouse automated testing suite for web pages was used on every page, testing for mobile platform. However, SEO score was ignored, due to the nature of the application being a personal service rather than a public one. Screenshot of dashboard results \ref{fig:lighthouse}. Results are collated in a table: \ref{table:lighthouse}
 \begin{longtblr}[
