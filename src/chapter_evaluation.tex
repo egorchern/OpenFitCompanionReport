@@ -2,8 +2,8 @@
 \label{cha:evaluation}
 \section{Function}
 No unit or integration tests were produced. Integration testing was not done because, in a distributed system, such as microservices is incredibly complex and time consuming. Unit tests would have limited utility, as the amount of code is actually quite small, and would require a lot of work due to mocking numerous external services. Manual testing was done instead, which proofed sufficient enough for me as a sole developer, however ideally, for an open-source project there would need to be tests, as new contributors would not feel confident making changes without automatic checks to see if anything got broken.
-All of the functional aims and user requirements have been fulfilled. Measurements from Withings watch and Oura ring are successfully pulled into to the backend in real-time as new data becomes available, accomplishing the same functionality as aggregators like Google Fit. The following is shows screenshot proof: Withings steps: \ref{fig:withingsSteps}, Oura steps: \ref{fig:ouraSteps} - both on a dashboard: \ref{fig:openFitCompanionSteps}. 
-One functional requirement that was not fulfilled was 
+All of the functional aims and user requirements have been fulfilled. Measurements from Withings watch and Oura ring are successfully pulled into to the backend in real-time as new data becomes available, accomplishing the same functionality as aggregators like Google Fit. The following is shows screenshot proof: Withings steps: \ref{fig:withingsSteps}, Oura steps: \ref{fig:ouraSteps} - both on a dashboard: \ref{fig:openFitCompanionSteps}. Other examples are present on the screencast.
+One part of user story for weekly report that was not fulfilled was comparison with other weeks, such as green arrow if consistency improved or red one if it got worse. 
 \begin{figure}
     
     \centering
@@ -232,5 +232,30 @@ Each page has been evaluated for UI quality by checking if all applicable golden
 To comment on a few interesting entries, universal usability compliance on any page is debatable, it can be used on any screen size and the language is quite simple to understand, however there are no internationalization such as other language versions or different date/calendar versions. AI chat was the worst performing one, as no feedback is displayed when user submits a prompt, only after manually refreshing the page the outcome is seen; also no reversal, no prevention of errors: users may put very long or complicated prompt that uses entire RAG file, which will burn through their OpenAI credits. 
 \section{AI Insights Quality}
 Providing quantifiable evidence of LLM response quality would be too complex and out of scope for this project. One good example and one bad example of an insight will be provided, as well as my qualitative thoughts about the insights after using the service as a normal user for 10 days. 
+\begin{figure}
+    
+    \centering
+    \includegraphics[width=1\textwidth,keepaspectratio]{../images/GoodAi.png}
+    \caption{Good AI insight: Monthly feedback}
+    \label{fig:goodAi}
+    
+\end{figure}
+\begin{figure}
+    
+    \centering
+    \includegraphics[width=1\textwidth,keepaspectratio]{../images/BadAi.png}
+    \caption{Bad AI insight: Exercise Plan}
+    \label{fig:badAi}
+    
+\end{figure}
+
+One good thing I could point out, is LLM's ability to parse, analyse and spot some trend. A JSON file that is quite raw and unformatted for efficient analysis is uploaded and analysed successfully by GPT4. For example, when requesting a monthly feedback \ref{fig:goodAi}, it is able to point out variability in step count, showing on which day there were significantly less steps than in general trend. It was able to distinguish between variability/consistency versus mean, as it pointed that although mean physical activity per day is high, inconsistencies are also present, which is detrimental to the health. All of the findings I checked reflect reality, it does not invent numbers out of thin air, and insights are likely something that a human fitness coach would point out as well. 
+
+One issue that I was not able to solve is "obsessiveness" towards some details. For example, on non-gym days exercises should have option to include using user's home equipment such as resistance bands. Unfortunately, after adding this to the instructions, nearly all exercises are to do with resistance bands \ref{fig:badAi}, which gets boring to the user. Nothing seemed to work to fix this, I've tried saying: "mix of home equipment exercises and no equipment needed exercises", "50\% home-equipment and 50\% no equipment needed", "prioritise variety of types of exercise", etc. It always came out on one side of the extreme, whereas the desired result is in the middle . 
+
+Trends are often surface-level, with not much depth, they are mainly just picking out the obvious, which is something a normal person could do on their own anyway. For example, even on the good example \ref{fig:goodAi}, it picked out high steps counts and give a few examples. Another example was, when the daily feedback pointed that soft activity and steps were areas to be improved, however, they are very similar, so instead it could recommend to go on more walks to improve both metrics at the same time, rather than improving those metrics separately. Another negative point is that developing a good prompt requires a lot of trial-and-error, which is expected, but the price is charged per each attempt, I personally spent about 40£ on developing the prompts.
+I think more work needs to be done to make insights more thorough and useful or the cost of inference has to go down, because currently ratio of utility to cost is low in my opinion.
 \section{Comparing Devices - Discussing results}
-accelerometers
+Discussing \ref{fig:results}, to give an example of what equivalence bound is, at 95\% confidence, if we allow measurements to differ by more than 321 steps, then devices will be considered equal; consequently, any tolerance lower than that value will result in concluding that devices are different. It quantifies how much difference there is instead of just giving a binary answer of: reject null hypothesis of equivalence or not enough evidence. Both devices are equivalent in steps, even at 90\% confidence, which isn't included in the table for clarity. This is expected, as steps are not derived using bio data, but rather using dedicated hardware such as accelerometer, so the difference should not be large. I was not able to confirm it from the official documentation, but I suspect that the watch just classifies REM sleep as light sleep, since during the same time at night it shows REM sleep in the Oura app, while Withings has it as light sleep. This would essentially make sleep comparison not-valid, as they don't really measure the same metrics. The only sleep metric that is equivalent between devices is total sleep duration, although only at higher 99\% confidence. This reflects my personal experience, as the watch usually has a delay to detect that I am awake, around 10 minutes, so I would assume the same happens with falling asleep delay. It sums up to near 27 minutes difference, as calculated with the equivalence bound. This also suggests that devices might be similar for sleep tracking, but the comparison can't be made as the watch has a completely different framework with no REM sleep.  The one that is confusing is calories burned, which is deemed the same between two devices, but all other activity properties are significantly different, therefore it would make sense for calories to be different as well, as it is most likely derived from them. The watch tends to have more intense activity and the ring has more soft activity, so that overall difference balances out resulting in similar calories burned.
+
+Answering the research question, there is evidence to suggest that devices might measure/classify activity metrics (soft, moderate, intense) differently. All of the other metrics either show equivalence or are not directly comparable. 
