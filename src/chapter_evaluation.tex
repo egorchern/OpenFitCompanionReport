@@ -176,6 +176,25 @@ User requirements specified that all variables, configurations, etc should be ea
 Scheduled events such as daily report notification as well as concentration of exercises (such as more exercises in the morning please) were hard-coded, as they would require a lot more work to implement. However, all else can be modified through GUI and that information is accurately reflected in insights.
 \subsection{Ease of set-up}
 Ideally, even a non-technical would be able to follow easy set-up steps and have an application running in the cloud. Unfortunately, the end product can't be classified as such. Creating and modification of AWS resources mainly happened on the web console through GUI. It was done to develop features fast, without learning tools such as Infrastructure as code. However, this meant that the infrastructure would not be reproducible. Fortunately, there is a service - Former2 that can analyse resources in an AWS account and create CloudFormation file, which can be used reproduce the same infrastructure in a brand new account. However, the service is not perfect and trying to deploy in a new account resulted in errors, which I didn't get enough time to fix by deadline. Also, the set-up requires manually registering an application with Withings while Oura simply provides a personal access token. This is not something that can be fixed, as automating it is illegal, as it is essentially botting. 
+\subsection{Latency}
+Latency can sometimes be quite bad. This is the latency for API response to the frontend on cold start: \ref{fig:latencyBad}, and this is second invocation \ref{fig:latencyGood}. Latency on cold start can reach up to 2.5 seconds. This probably is not only due to Lambda cold start, DynamoDB probably also has caching mechanism, so latency doubles up. However, on subsequent requests the latency is quite fast at around 200ms.   
+\begin{figure}
+    
+    \centering
+    \includegraphics[width=0.8\textwidth,keepaspectratio]{../images/latencyBad.png}
+    \caption{Latency on cold API function}
+    \label{fig:latencyBad}
+    
+\end{figure}
+\begin{figure}
+    
+    \centering
+    \includegraphics[width=0.8\textwidth,keepaspectratio]{../images/latencyGood.png}
+    \caption{Latency on hot API function}
+    \label{fig:latencyGood}
+    
+\end{figure}
+
 \section{Frontend Performance \& Accessibility \& UI}
 Lighthouse automated testing suite for web pages was used on every page, testing for mobile platform. However, SEO score was ignored, due to the nature of the application being a personal service rather than a public one. Screenshot of dashboard results \ref{fig:lighthouse}. Results are collated in a table: \ref{table:lighthouse}
 \begin{longtblr}[

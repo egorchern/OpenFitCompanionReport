@@ -18,6 +18,7 @@ Sleep is made of many stages, but 3 large groups are: light sleep, deep sleep an
 \section{Similar Systems}
 \label{section:similarSystems}
 \subsection{Google Fit}
+Google Fit is an open ecosystem. It lets developers upload health and wellness data to a central repository where users can access their data from different devices and apps in one location. \cite{googleFit}. It's defining good qualities are: very clean UI, completely free with no ads and relatively cross-platform app, with iOS and Android supported, but no web version.  Google Fit by itself offers a very limited functionality, such as dashboard of aggregated data - it is a platform. Partner apps can connect to that aggregated data and use it for useful purposes, but it may use them unfairly like, such as pay-walling or transferring data to US like MyFitnessPal does. Google Fit is still a closed-source system, and it does not make any money, so it is not clear how Google covers those expenses. Google was involved in many legal cases with EU courts for anti-trust \cite{googleAntiTrust} and data protection violations \cite{googleDataProtect, googleDataProtect2} .
 \subsection{Apple Health}
 \subsection{MyFitnessPal}
 \section{Devices Used}
@@ -59,9 +60,8 @@ Functional requirements are more technical, and are intended to be used as descr
 
 \section{Cloud}
 Cloud computing is a model for enabling convenient, on-demand network access to a shared pool of configurable computing
-resources (e.g., networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal
-management effort or service provider interaction. \cite {cloudDef}
-Using cloud for the software service infrastructure has the benefit of off-loading complexity to cloud providers instead of handling it yourself. The services they provided are characterized as follows \cite{cloudServicesCategories}: 
+resources (e.g., networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal management effort or service provider interaction. \cite {cloudDef}
+Using cloud for the software service infrastructure has the benefit of off-loading complexity to cloud providers instead of handling it yourself. In comparison with traditional in-house infrastructure, cloud is superior in terms of cost, as there is no upfront cost and it generally being cheaper through economies of scale, as well as and reliability, as maintenance and contingency planning are handled by the best specialists in that area.  \cite{armbrust2009above, hajjat2010cloudward}.  
 \subsection{Serverless \& Microservices}
 Serverless computing differs from traditional cloud computing, as infrastructure on which services are running are hidden from customers, so that they only need to worry about desired application functionality rather than configuration and management of low-level resources; as well as providing pay-as-you-go model and auto-scaling per demand \cite{serverless1}.  It is mainly used in Event-Driven systems, because successful application of serverless requires well-defined: event, trigger and action \cite{MALAWSKI2020502, serverless2}. 
 
