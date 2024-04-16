@@ -2,45 +2,48 @@
 \label{cha:intro}
 
 \section{Motivation}
-\par
-In collaboration with NHS Manchester Royal Infirmary, I have received smart wearable devices - Withings Watch,
-and later Oura ring. It was during a time when I wanted to improve my fitness, and so I had an initial idea of an
+
+Smart Wearable devices can continuously and autonomously collect metrics about heart, activity, 
+sleep and more. That data can then be used to autonomously derive insights, such as providing weekly exercise consistency metrics. 
+This eliminates the monotony of manual information tracking, as users don't have to do anything other than wear the devices,
+ allowing them to focus on what matters. By using multiple devices, we can correct for inaccuracies of a single device. 
+ The focus of this project is on wearable devices, however, there is also potential to get further fitness data, and thus better-quality insights, from stationary smart devices such as smart scales.
+
+In the wider context, this topic is important because fitness is closely linked with a person's overall health, being a risk factor in developing depression, heart diseases and more \cite{nhsObesity}. 
+Fitness levels have been on the decline in both the UK and the rest of the world.
+For example, as of Nov. 2021, 63.5\% of adults in England are either obese or overweight \cite{ukObesity2023Survey}. 
+In Nov. 2022, It was estimated that obesity costs the NHS £6 billion annually \cite{nhsObesityCost}.
+Therefore, there is a large interest from institutions such as NHS to use technology to help combat this problem. In collaboration with NHS Manchester Royal Infirmary, smart wearable devices - Withings Watch,
+and later Oura ring were provided for the project.
+
+
+Initial motivation came from personal circumstances, as it was during a time when I wanted to improve my fitness, and so I had an initial idea of an
 application that would act as a companion in a fitness journey. Such as reminding about daily activity, highlighting progress made and
 possibly autonomously making suggestions from gathered wearable data. Researching existing product offerings, none of them 
 did everything I envisioned, or they had major drawbacks such as cost.
-\par One major point of contention with current wearables data tracking apps is that they are all closed-source offerings
+
+One major point of contention with current wearables data tracking apps is that they are all closed-source offerings
  from for-profit corporations such as Google, Apple etc.
  Those apps are often predatory, following the well-known pattern in tech products, offering
  services for free to hook the user, and then pay-walling existing features to start getting profit margins once the user base has sufficiently grown. 
  One stark example is - MyFittnessPal, locking the previously free beloved feature of 
  calorie counting behind a premium \cite{myfitnesspalPaywall} as well as having a data breach that leaked sensitive health data of 150 million users \cite{myFitnessPalDataBreach}.
- My colleague who also worked with a Withings watch had their data deleted from their Withings app, probably caused by inactivity, as they stopped using the device after collecting enough data for their project. 
- This highlights the need to minimise reliance on such systems. I think that a community-driven open-source solution is a better approach. 
- It enables better security through faster vulnerability patching, as well as making it impossible to introduce predatory practices \cite{openSourcePredatoryProtect} By self-deploying the application, users would only pay for what they use on a pay-as-you-go basis. 
-\par
-In the wider context, this topic is important because fitness is closely linked with a person's overall health, being a risk factor in developing depression, heart diseases and more \cite{nhsObesity}. 
-Fitness levels have been on the decline in both the UK and the rest of the world.
-For example, as of Nov. 2021, 63.5\% of adults in England are either obese or overweight \cite{ukObesity2023Survey}. 
-In Nov. 2022, It was estimated that obesity costs NHS £6 billion annually \cite{nhsObesityCost}.
-Therefore, there is a large interest from institutions such as NHS to use technology to help combat this problem.
+Our colleague who also worked with a Withings watch had their data deleted from their Withings app, probably caused by inactivity, as they stopped using the device after collecting enough data for their project. 
+ This highlights the need to minimise reliance on such systems. We believe that a community-driven open-source solution is a better approach. 
+ It enables better security through faster vulnerability patching, as well as making it impossible to introduce predatory practices \cite{openSourcePredatoryProtect}. By self-deploying the application, users would only pay for what they use on a pay-as-you-go basis. The app would also be cross-platform, and usable on as many devices as possible.
 
-\par Smart Wearable devices can continuously and autonomously collect metrics about heart, activity, 
-sleep and more. That data can then be used to autonomously derive insights, such as providing weekly exercise consistency. 
-This eliminates the monotony of manual information tracking, as users don't have to do anything other than wear the devices,
- allowing them to focus on what matters. By using multiple devices, we can correct for inaccuracies of a single device. 
- The focus of this project is on wearable devices, however there is also potential to get further fitness data, and thus better quality insights, from stationary smart devices such as smart scales.
-
-\par AI can be used to extract much more complex insights than any hand-crafted methods. With the recent advancements,
+AI can be used to extract much more complex insights than any hand-crafted methods. With the recent advancements,
  namely LLMs such as GPT4, the quality of inferences and ease of use have never been better than before. In particular,
  those models are good at utilizing large amounts of context information to influence the result, this can be wearables data in this case. Also, those models are pre-trained, so we avoid issues of machine learning projects: creating a dataset, ensuring no bias, tweaking hyperparameters, training for large epoch counts to get adequate accuracy, etc.  As such, there is a large opportunity to explore how those models can help with the problem at hand. This is something that a few product offerings 
- have implemented recently, however, their pricing is astronomical and is not easily accessible to lower-income individuals. More on this in [].
-
+ have implemented recently, however, their pricing makes them not easily accessible to lower-income individuals. 
 
 On a personal note, what I found to be the hardest with fitness is staying consistent. It is especially tough because you don't 
 see results immediately and it feels that you are not progressing. It is also very tedious to manually track fitness-related metrics.
-Lastly, there might not be somebody who gives you encouragement or holds you accountable. I wanted to address all of those factors in my application, hoping it would help somebody out there as it helped me.
+Lastly, there might not be somebody who encourages you or holds you accountable. I wanted to address all of those factors in my application, hoping it would help somebody out there as it helped me.
+
+
 \section{Aims}
-On a high-level, those are the aims I wanted my application to fullfil.
+On a high level, those are the aims the application should fulfil.
 \begin{center}
     \begin{tabularx}{1\textwidth} {| >{\centering\arraybackslash}X 
         | >{\centering\arraybackslash}X 
@@ -48,46 +51,42 @@ On a high-level, those are the aims I wanted my application to fullfil.
     \hline
     Aim & Criteria for success  \\ 
     \hline
-     1: Autonomously sync in real-time with several fitness devices, storing data in our database and producing single unified measurement as well & Concrete implementation, with example shown, to sync with Withings And Oura products, creating unified measurement by averaging.  Infrastructure to allow easy implementation of sync with other providers\\ 
+     1: Autonomously sync in real-time with several fitness devices, storing data in our database and producing single unified measurement as well & Concrete implementation, with an example shown, to sync with Withings and Oura products, creating unified measurement by averaging.  Infrastructure to allow easy implementation of sync with other providers\\ 
     \hline
-     2: Report to the user about their progress via notification, providing useful metrics and insights & Implementation to send push notification to the user's phone, then providing metrics on a separate page. Such as if the user fulfilled expected daily activity levels. \\ 
+     2: Report to the user about their progress via notification, providing useful metrics and insights & Implementation to send push notifications to the user's phone, then providing metrics on a separate page. Such as if the user fulfilled expected daily activity levels. \\ 
     \hline
-     3: Integrate AI to analyse the data and provide accurate and effective feedback about the user's health and well-being & Concrete implementation using GPT4, provides feedback for each day, week and month. Feedback should be factual, mention specific metrics/measurements, and include positive areas and areas that the user can improve on.\\
+     3: Integrate AI to analyse the data and provide accurate and effective feedback about the user's health and well-being & Concrete implementation using GPT4, provides feedback for: each day, week and month. Feedback should be factual, mention specific metrics/measurements, and include positive areas and areas that the user can improve on.\\
     \hline
-     4: Nudge the user to participate in physical activities by recommending the best activities/exercises depending on a variety of customizable parameters and data available &  Implementation to send push-notifications throughout times of day, linking to AI planned activity plan for that time. Activities should have descriptions and videos on how to perform them. Activities should be well-suited for the user's preferences and the data collected.\\
+     4: Nudge the user to participate in physical activities by recommending the best activities/exercises depending on a variety of customizable parameters and data available & Implementation to send push notifications throughout times of day, linking to AI planned activity plan for that time. Activities should have descriptions and videos on how to perform them. Activities should be well-suited for the user's preferences and the data collected.\\
     \hline
-     5: Minimise the cost of running the service & Compare the cost of operating our service with the costs of competing similar systems. They should provide similar functionality in order for the comparison to be fair. \\
+     5: Minimise the cost of running the service & Compare the cost of operating our service with the costs of competing similar systems. They should provide similar functionality for the comparison to be fair. \\
     \hline
      6: Service should be secure. Preventing unauthorized access to data or functionality & Data should only be accessible by the sole authorized user - the Owner. Utilize automatic security testing tools as well as manual review to demonstrate compliance.\\
     \hline
      7: Using the data gathered by the service, perform data analysis to compare measurement differences between devices. &  Comprehensive data analysis is performed, with evaluation of results as well as limitations of the analysis.\\
      \hline
-     8: The service shall match the state-of-the-art commercial solutions in terms of performance, UI/UX and ease-of-use & Compare performance, UI and ease-of-use metrics/quality with state-of-the-art standard or products  \\
+     8: The service shall match the state-of-the-art commercial solutions in terms of performance, UI/UX and ease-of-use & Compare performance, UI and ease-of-use metrics/quality with state-of-the-art standard or products.  \\
      \hline
     \end{tabularx}
 \end{center}
 \section{Description}
-Putting aims of the core application into short text: OpenFitCompanion is an open-source health data aggregator similar to commercial products like MyFitnessPal or Apple Fitness+ but prioritising: transparency, cross-platform, self-deployed infrastructure, data ownership and low cost. Aiming to provide better insights by using cutting edge generative AI technologies, as well as automating health data administrative tasks, so that users can focus on the meaningful actions that improve their life.
+Putting aims of the core application into short text: OpenFitCompanion is an open-source health data aggregator similar to commercial products like MyFitnessPal or Apple Fitness+ but prioritising: transparency, cross-platform, self-deployed infrastructure, data ownership and low cost. Aiming to provide better insights by using cutting-edge generative AI technologies, as well as automating health data administrative tasks, so that users can focus on the meaningful actions that improve their lives.
 \section{Report Structure}
 \subsection{Background}
-The chapter will introduce concepts, provide an overview of devices used and competing software products + their problems. Note that concepts and components will be introduced in the general scenario, their applicability, configurations and justification of choice is made in the core design section \ref{cha:core_system_design}
+The chapter will introduce concepts and provide an overview of devices used and competing software products + their problems. Note that concepts and components will be introduced in the general scenario, their applicability, configurations and justification of choice are made in the core design section \ref{cha:core_system_design}
 \subsection{Core design}
-This chapter will walk-though the process of creating the core application - OpenFitCompanion. Going from requirements to full design, heavily supported by diagrams.
+This chapter will walk through the process of creating the core application - OpenFitCompanion. Going from requirements to full design, heavily supported by diagrams.
 \subsection{Comparing devices}
 This chapter walks through a supplementary project task of comparing data between devices used.
 \subsection{Evaluation}
-There is an evaluation for all of the aims, discussing whether criteria for success were met.
+There is an evaluation for all of the aims, discussing whether the criteria for success were met.
 \begin{itemize}
     \item 1, 2: Functionality examples will be provided.
     \item 3, 4: AI response quality will be examined, with examples of responses provided. 
-    \item 5: Cost analysis will be performed, calculating monthly cost of running the service from my actual personal use. This will be compared with the cost of competing products.
-    \item 6: Security analysis, using automatic web vulnerability scanners, as well as manual review of IAM roles for adherence to least privilege principle
-    \item 7: Evaluation of data analysis results will be performed, stating significance of findings and limitations.
+    \item 5: Cost analysis will be performed, calculating the monthly cost of running the service from my actual personal use. This will be compared with the cost of competing products.
+    \item 6: Security analysis, using automatic web vulnerability scanners, as well as manual review of IAM roles for adherence to the least privilege principle
+    \item 7: Evaluation of data analysis results will be performed, stating the significance of findings and limitations.
     \item 8: Front-end's performance, UI adherence to golden rules and accessibility will be examined.
 \end{itemize}
 \subsection{Conclusions}
-This chapter concludes the report, providing ideas for further work as well as my personal reflection on the project
-
-
-
-
+This chapter concludes the report, providing ideas for further work as well as my personal reflection on the project.
