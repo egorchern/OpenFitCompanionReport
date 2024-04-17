@@ -44,31 +44,25 @@ Lastly, there might not be somebody who encourages you or holds you accountable.
 
 \section{Aims}
 On a high level, those are the aims the application should fulfil.
-\begin{center}
-    \begin{tabularx}{1\textwidth} {| >{\centering\arraybackslash}X 
-        | >{\centering\arraybackslash}X 
-        |}
-    \hline
-    Aim & Criteria for success  \\ 
-    \hline
-     1: Autonomously sync in real-time with several fitness devices, storing data in our database and producing single unified measurement as well & Concrete implementation, with an example shown, to sync with Withings and Oura products, creating unified measurement by averaging.  Infrastructure to allow easy implementation of sync with other providers\\ 
-    \hline
-     2: Report to the user about their progress via notification, providing useful metrics and insights & Implementation to send push notifications to the user's phone, then providing metrics on a separate page. Such as if the user fulfilled expected daily activity levels. \\ 
-    \hline
-     3: Integrate AI to analyse the data and provide accurate and effective feedback about the user's health and well-being & Concrete implementation using GPT4, provides feedback for: each day, week and month. Feedback should be factual, mention specific metrics/measurements, and include positive areas and areas that the user can improve on.\\
-    \hline
-     4: Nudge the user to participate in physical activities by recommending the best activities/exercises depending on a variety of customizable parameters and data available & Implementation to send push notifications throughout times of day, linking to AI planned activity plan for that time. Activities should have descriptions and videos on how to perform them. Activities should be well-suited for the user's preferences and the data collected.\\
-    \hline
-     5: Minimise the cost of running the service & Compare the cost of operating our service with the costs of competing similar systems. They should provide similar functionality for the comparison to be fair. \\
-    \hline
-     6: Service should be secure. Preventing unauthorized access to data or functionality & Data should only be accessible by the sole authorized user - the Owner. Utilize automatic security testing tools as well as manual review to demonstrate compliance.\\
-    \hline
-     7: Using the data gathered by the service, perform data analysis to compare measurement differences between devices. &  Comprehensive data analysis is performed, with evaluation of results as well as limitations of the analysis.\\
-     \hline
-     8: The service shall match the state-of-the-art commercial solutions in terms of performance, UI/UX and ease-of-use & Compare performance, UI and ease-of-use metrics/quality with state-of-the-art standard or products.  \\
-     \hline
-    \end{tabularx}
-\end{center}
+\begin{longtblr}[
+    caption={Project Aims \& Criteria For Success},
+    label={table:aims}
+]{colspec = {|X|X|},
+rowhead = 1,
+hlines
+}
+Aim & Criteria for success  \\ 
+ 1: Autonomously sync in real-time with several fitness devices, storing data in our database and producing single unified measurement as well & Concrete implementation, with an example shown, to sync with Withings and Oura products, creating unified measurement by averaging.  Infrastructure to allow easy implementation of sync with other providers\\ 
+ 2: Report to the user about their progress via notification, providing useful metrics and insights & Implementation to send push notifications to the user's phone, then providing metrics on a separate page. Such as if the user fulfilled expected daily activity levels. \\ 
+ 3: Integrate AI to analyse the data and provide accurate and effective feedback about the user's health and well-being & Concrete implementation using GPT4, provides feedback for: each day, week and month. Feedback must be factual, mention specific metrics/measurements, and include positive areas and areas that the user can improve on.\\
+ 4: Nudge the user to participate in physical activities by recommending the best activities/exercises depending on a variety of customizable parameters and data available & Implementation to send push notifications throughout times of day, linking to AI planned activity plan for that time. Activities must have descriptions and videos on how to perform them. Activities must be well-suited for the user's preferences and the data collected.\\
+ 5: Minimise the cost of running the service & Compare the cost of operating our service with the costs of competing similar systems. They must provide similar functionality for the comparison to be fair. \\
+ 6: Service must be secure. Preventing unauthorized access to data or functionality & Data must only be accessible by the sole authorized user - the Owner. Utilize automatic security testing tools as well as manual review to demonstrate compliance.\\
+ 7: Using the data gathered by the service, perform data analysis to compare measurement differences between devices. &  Comprehensive data analysis is performed, with evaluation of results as well as limitations of the analysis.\\
+ 8: The service shall match the state-of-the-art commercial solutions in terms of performance, UI/UX and ease-of-use & Compare performance, UI and ease-of-use metrics/quality with state-of-the-art standard or products.  \\
+ 9: The codebase must be attractive to potential open-source contributors. & The Codebase must use standard, wide-spread technologies, and be readable.
+\end{longtblr}
+
 \section{Description}
 Putting aims of the core application into short text: OpenFitCompanion is an open-source health data aggregator similar to commercial products like MyFitnessPal or Apple Fitness+ but prioritising: transparency, cross-platform, self-deployed infrastructure, data ownership and low cost. Aiming to provide better insights by using cutting-edge generative AI technologies, as well as automating health data administrative tasks, so that users can focus on the meaningful actions that improve their lives.
 \section{Report Structure}
