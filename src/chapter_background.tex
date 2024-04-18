@@ -27,15 +27,15 @@ Google Fit is an open ecosystem. It lets developers upload health and wellness d
 \subsection{Apple Health \& Apple Fitness+}
 Apple Health is essentially the same as Google Fit, with the basic version also just providing a simple dashboard. But, unlike Google, it offers a premium service - Apple Fitness+ with a cost of 9.99£, which offers health reports, trends and exercise plans. It is well integrated into the Apple product ecosystem. The biggest downside is that it is only available on iOS devices as an app. Apple Health is a good option for users with iOS devices, as the company has a generally good reputation with data privacy, but there were small cases of GDPR violations \cite{CNILApple} and major cases of anti-trust \cite{appleAntiTrust}.
 \subsection{MyFitnessPal}
-MyFitnessPal is an app described with: "Build healthy habits with the all-in-one food, exercise, and calorie tracker" \cite{fitnesspal}. Its free version contains the same basic functionality, such as syncing data and showing it on a dashboard. Anything more useful like reports, guided exercise routines, etc is behind a premium costing 15.99£ per month. One very impressive feature is the meal scan, where meals are added by pointing a camera at them. It has a negative reputation, experiencing a major data breach involving 150 million users \cite{masuch2021fitness, myFitnessPalDataBreach}, transferring data to the US \cite{myfitnesspalTransferring} where data protection laws are more lenient and pay-walling previously free features \cite{myfitnesspalPaywall}
+MyFitnessPal is an app described with: "Build healthy habits with the all-in-one food, exercise, and calorie tracker" \cite{fitnesspal}. Its free version contains the same basic functionality, such as syncing data and showing it on a dashboard. Anything more useful like reports, guided exercise routines, etc is behind a premium costing 15.99£ per month. One very impressive feature is the meal scan, where meals are added by pointing a camera at them. It has a negative reputation, experiencing a major data breach involving 150 million users \cite{masuch2021fitness, myFitnessPalDataBreach}, transferring data to the US \cite{myfitnesspalTransferring} where data protection laws are more lenient and pay-walling previously free features \cite{myfitnesspalPaywall}.
 
 \section{Devices Used}
 \subsection{Withings}
 \label{section:WithingsWatch}
 Withings ScanWatch was used for the project - \cite{withingsStorePage}. It can record activity seconds, steps, ECG (electrocardiogram - waveform of heart's electrical activity), SPO2 (blood oxygenation) and more. ScanWatch integrates a different device called Scan Monitor, which has CE medical certification in Europe and FDA clearance in the United States \cite{withingsStorePage}.  Scan Monitor has the following accuracy metrics published \cite{scanMonitor}:
 \begin{itemize}
-    \item ECG recording: IEC 60601-2-47 (Requirements for the Basic Safety and Essential Performance of Ambulatory Electrocardiographic Systems.) beat-to-beat detection with F1-score of at least 99.19\% 
-    \item AFib: 98.16\% sensitivity in classifying AFib (irregular heartbeat)
+    \item ECG recording: IEC 60601-2-47 (Requirements for the Basic Safety and Essential Performance of Ambulatory Electrocardiographic Systems.) beat-to-beat detection with F1-score of at least 99.19\%.
+    \item AFib: 98.16\% sensitivity in classifying AFib (irregular heartbeat).
     \item Sinus Rhythm: 97.20\% specificity in classifying sinus rhythm.
 \end{itemize}
 SPO2 accuracy is provided by this statement: "The measure of SpO2 in the range 70-100\% has been clinically validated on healthy adult volunteers, at rest against a laboratory co-oximeter" \cite{scanMonitor}.
@@ -66,9 +66,9 @@ Functional requirements are more technical and are intended to be used as a desc
 
 To give a brief introduction to a system use case diagrams: \ref{fig:useCase}
 \begin{itemize}
-    \item Extend: base use case is complete by itself. Extending use case is optional
+    \item Extend: base use case is complete by itself. Extending use case is optional.
     \item Include: base case is incomplete, included use case is a required.
-    \item Implements: use case is abstract
+    \item Implements: use case is abstract.
 \end{itemize}
 \begin{figure}
     
@@ -103,7 +103,7 @@ AWS was chosen for this project for the following reasons:
     \item Lambda: Serverless function offering which allows deployment of microservices without the need of managing servers with pay only for what you use pricing structure \cite{LambdaCostSave}, also referred to as Function-as-a-Service model \cite{MALAWSKI2020502}. Function is executed in response to an event, such as a direct HTTP call.  Allows saving up to 77.08\% compared to traditional monolithic server \cite{LambdaCostSave}.
     \item DynamoDB: a fully managed NoSQL database that provides predictable and super-fast performance with unified scalability. Defining Characteristics: Eventually consistent, AP in CAP classification and key-based access focus \cite{DynamoDB}. Tables are schemaless except for the Primary key, which has to be unique among the rows; it may consist of a Partition key or composite of Partition key + Sort key, with partition determining internal physical storage partition and items being sorted in order via sort key attribute \cite{awsDynamoWebsite}. 
     \item SNS: Amazon Simple Notification Service (Amazon SNS) is a managed service that provides message delivery from publishers to subscribers (also known as producers and consumers). Publishers communicate asynchronously with subscribers by sending messages to a topic, which is a logical access point and communication channel. Clients can subscribe to the SNS topic and receive published messages using a supported endpoint type \cite{sns}. 
-    \item Amplify: AWS Amplify is a complete solution that lets frontend web and mobile developers easily build, connect, and host full-stack applications on AWS \cite{amplify}. Although it has a lot of services, only Amplify Hosting will be used. It provides a git-based workflow for continuous deployment and subsequent hosting: performing typical front-end server functionalities: file compression, caching, etc
+    \item Amplify: AWS Amplify is a complete solution that lets frontend web and mobile developers easily build, connect, and host full-stack applications on AWS \cite{amplify}. Although it has a lot of services, only Amplify Hosting will be used. It provides a git-based workflow for continuous deployment and subsequent hosting: performing typical front-end server functionalities: file compression, caching, etc.
 \end{itemize}
 The following diagram gives a visual representation of each above-mentioned component: \ref{fig:awsComponents}.
 \begin{figure}

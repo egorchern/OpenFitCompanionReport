@@ -27,7 +27,7 @@ The following user requirements for the system were gathered by inspecting simil
 
         As a user I can critically reflect on the past day, with helpful insights and data presented on the UI; I also want to be reminded about this every day at a certain configurable time; So that I can assess my progress towards my health goals, take pride in my accomplishments today and identify areas to improve on tomorrow.
         & 
-        Given that the user is authenticated, at a user-configured time, the user is notified about daily report being available. On the daily report UI page, there is feedback highlighting areas of achievement and areas to improve on; as well as a graph visualising user's progress towards their weekly activity goals, as well as how well/poor the predicted daily activity norm was achieved
+        Given that the user is authenticated, at a user-configured time, the user is notified about daily report being available. On the daily report UI page, there is feedback highlighting areas of achievement and areas to improve on; as well as a graph visualising user's progress towards their weekly activity goals, as well as how well/poor the predicted daily activity norm was achieved.
         \\
 
         As a user I can critically reflect on the past week, with helpful insights and data presented on the UI; I also want to be reminded about this every week at a certain configurable time; So that I can assess my consistency in physical activity or sleep, as well as compare this with the previous week.
@@ -127,7 +127,7 @@ The following non-functional requirements for the system were gathered by inspec
     \label{fig:1}
     
 \end{figure}
-Overall, the architecture is structured as a composition of event-driven microservices. Computation only needs to happen in response to an external event. This is enabled by providers supplying Webhook integrations. Essentially, the backend gets a notification from providers whenever there is new data available from them. The microservices approach allows for much stronger fault tolerance, whereby a fault in one part, does not bring the entire service down; for example, a bug in interfacing with the providers won't prevent the user from accessing the UI and the associated API endpoint with the database. It is also far cheaper than a monolithic service. The following is the diagram together with sample data exchanged: \ref{fig:1}
+Overall, the architecture is structured as a composition of event-driven microservices. Computation only needs to happen in response to an external event. This is enabled by providers supplying Webhook integrations. Essentially, the backend gets a notification from providers whenever there is new data available from them. The microservices approach allows for much stronger fault tolerance, whereby a fault in one part, does not bring the entire service down; for example, a bug in interfacing with the providers won't prevent the user from accessing the UI and the associated API endpoint with the database. It is also far cheaper than a monolithic service. The following is the diagram together with sample data exchanged: \ref{fig:1}.
 
 Cloud-deployed backend service receives notifications from providers, containing information that allows atomic processing of that notification. 
 
