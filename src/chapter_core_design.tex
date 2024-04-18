@@ -54,18 +54,18 @@ The following functional requirements were derived so that user requirements cou
     \item Daily \& Weekly Reports diagram: \ref{fig:4}
     \item AI Inference flowchart: \ref{fig:5}
     \item Activity Plan diagram: \ref{fig:6}
-    \item Personalisation: User is able to configure their profile, which is saved in the database and used to customise modifiable parameters of the system. The profile has the following fields: 
-    \begin{itemize}
-        \item Height in cm: Integer
-        \item Weight in kg: Integer
-        \item MET minutes weekly target: Integer
-        \item Excluded activities keywords List of strings
-        \item Athleticism: Enum [Beginner, Intermediate, Expert]
-        \item Gym days: List of Days of the week
-        \item Home equipment: List of strings
-        \item Report notification time: Time
-        \item Daily activity reminder times: List of times
-    \end{itemize}
+    % \item Personalisation: User is able to configure their profile, which is saved in the database and used to customise modifiable parameters of the system. The profile has the following fields: 
+    % \begin{itemize}
+    %     \item Height in cm: Integer
+    %     \item Weight in kg: Integer
+    %     \item MET minutes weekly target: Integer
+    %     \item Excluded activities keywords List of strings
+    %     \item Athleticism: Enum [Beginner, Intermediate, Expert]
+    %     \item Gym days: List of Days of the week
+    %     \item Home equipment: List of strings
+    %     \item Report notification time: Time
+    %     \item Daily activity reminder times: List of times
+    % \end{itemize}
 \end{itemize}
 \begin{figure}
     
@@ -182,20 +182,6 @@ Breaking down the purpose of each component in \ref{fig:backend}: (Note: Some of
 \end{itemize}
 Integrating more providers comes down to only writing adapter implementation for them, the rest of the architecture stays the same. This makes the system easily extendable to any number or kind of providers.
 \section{Front-end}
-\subsection{UI}
-For the user-facing application, the standard eight golden rules of interface design \cite{goldenRulesUI} were followed when applicable, as well as striving to be minimalistic and only relevant details that can be scanned on the page quickly, as many other similar product offerings included way too much unneeded information on the screen at once. 
-\subsection{Technologies}
-The application is a PWA implemented using React, Typescript and other application specific libraries. PWA allowed the application to be installable and used as a native app on any device: pc, android, etc. Offering native functionalities such as background running and push notifications, while implemented as a website using standard platform-agnostic technologies instead of making dedicated native app for each platform; this enhances maintainability, as there is no need to maintain multiple versions for different platforms. Also, web-development is more widespread than native app development, allowing greater number of people to potentially contribute to this open-source project. Similarly to the backend, Typescript offers static type safety in an otherwise statically unsafe JavaScript language, which enhances maintainability and robustness by preventing typing related bugs. React allows writing UI components in a declarative style, without worrying about efficient low-level implementations for updating the DOM; also promoting great code reusability through components, which improves readability by decreasing number of lines of code. A number of other smaller libraries were used to not re-invent the wheel for the needed functionality, and instead use well-tested and well-documented libraries. For example, Chart.js was used extensively for creating graphs that were modern looking, easy to use and performant. 
-\subsection{Architecture}
-
-\begin{figure}
-    
-    \centering
-    \includegraphics[width=0.7\textwidth,keepaspectratio]{../images/frontend.pdf}
-    \caption{Front-end Architecture Diagram}
-    \label{fig:frontend}
-    
-\end{figure}
 \subsection{UI}
 For the user-facing application, the eight golden rules of interface design \cite{goldenRulesUI} were followed when applicable, as well as striving to be minimalistic and only including relevant info.
 \subsection{Technologies}

@@ -117,6 +117,14 @@ The following diagram gives a visual representation of each above-mentioned comp
 Software Security is important, especially in the context of this project, as it deals with sensitive health data. Generic web security recommendations should apply to this project, such as encrypting the data in transit. However, deploying the application on the cloud presents new security issues \cite{Zissis2012Addressing}, requiring stricter planning and evaluation.
 
 Voluntary Application Server Identification (VAPID) is an authentication method for WebPush (push protocol for web). It uses public and private keys to make sure that only the intended server can send push notifications to a client \cite{vapid}.
+
+Cross Site Scripting (XSS): a JavaScript code injection attack which happens when untrusted user input is used in a web application \cite{gupta2017cross}. 
+
+Clickjacking: An exploit when the website is embedded via iframe on the attacker's website and original UI elements are masked behind fake ones \cite{clickjacking}.
+
+Content-security policy (CSP): Mitigates XSS by defining from which origins (urls) files are considered valid, with all other files rejected \cite{csp}.
+
+Strict Transport Security: Force all communication to happen through HTTPS, else don't allow the communication to happen \cite{hsts}. 
 \section{LLMs}
 "A large language model is the language model with massive
 parameters that undergoes pretraining tasks (e.g., masked
